@@ -1,0 +1,2331 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Teoría Atómica — Guía de Estudio</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=DM+Sans:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --ink: #1a1a2e;
+        --ink2: #2d2d4a;
+        --muted: #7a7a9a;
+        --bg: #f5f4f0;
+        --bg2: #eeecea;
+        --bg3: #e4e2dc;
+        --card: #ffffff;
+        --accent: #c0392b;
+        --gold: #d4a017;
+        --blue: #2563a8;
+        --teal: #0e7c6b;
+        --purple: #6d28d9;
+        --border: rgba(26, 26, 46, 0.12);
+        --radius: 12px;
+        --radius-lg: 20px;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family: "DM Sans", sans-serif;
+        background: var(--bg);
+        color: var(--ink);
+        line-height: 1.7;
+        font-size: 16px;
+      }
+      .hero {
+        background: var(--ink);
+        color: #f0eeea;
+        padding: 64px 40px 52px;
+        position: relative;
+        overflow: hidden;
+      }
+      .hero::before {
+        content: "";
+        position: absolute;
+        width: 500px;
+        height: 500px;
+        border-radius: 50%;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        top: -120px;
+        right: -80px;
+      }
+      .hero::after {
+        content: "";
+        position: absolute;
+        width: 300px;
+        height: 300px;
+        border-radius: 50%;
+        border: 1px solid rgba(255, 255, 255, 0.04);
+        top: 40px;
+        right: 60px;
+      }
+      .hero-inner {
+        max-width: 860px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 1;
+      }
+      .hero-tag {
+        display: inline-block;
+        font-size: 11px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--gold);
+        border: 1px solid rgba(212, 160, 23, 0.4);
+        padding: 4px 12px;
+        border-radius: 20px;
+        margin-bottom: 20px;
+      }
+      .hero h1 {
+        font-family: "Fraunces", serif;
+        font-size: clamp(34px, 6vw, 60px);
+        font-weight: 700;
+        line-height: 1.1;
+        margin-bottom: 14px;
+        letter-spacing: -0.02em;
+      }
+      .hero h1 span {
+        color: var(--gold);
+      }
+      .hero-sub {
+        font-size: 16px;
+        color: rgba(240, 238, 234, 0.65);
+        max-width: 520px;
+        line-height: 1.65;
+        margin-bottom: 28px;
+      }
+      .hero-stats {
+        display: flex;
+        gap: 32px;
+        flex-wrap: wrap;
+      }
+      .hero-stat {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+      }
+      .hero-stat strong {
+        font-family: "Fraunces", serif;
+        font-size: 26px;
+        font-weight: 600;
+      }
+      .hero-stat span {
+        font-size: 11px;
+        color: rgba(240, 238, 234, 0.5);
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+      .progress-bar-wrap {
+        background: var(--ink2);
+        padding: 12px 40px;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+      .progress-inner {
+        max-width: 860px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+      .progress-label {
+        font-size: 11px;
+        color: rgba(240, 238, 234, 0.6);
+        white-space: nowrap;
+      }
+      .progress-track {
+        flex: 1;
+        height: 4px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 2px;
+      }
+      .progress-fill {
+        height: 100%;
+        background: var(--gold);
+        border-radius: 2px;
+        transition: width 0.5s ease;
+        width: 0%;
+      }
+      .progress-pct {
+        font-size: 12px;
+        color: var(--gold);
+        font-weight: 600;
+        min-width: 34px;
+        text-align: right;
+      }
+      .nav-wrap {
+        background: var(--card);
+        border-bottom: 1px solid var(--border);
+        padding: 0 40px;
+        overflow-x: auto;
+      }
+      .nav-inner {
+        max-width: 860px;
+        margin: 0 auto;
+        display: flex;
+      }
+      .nav-btn {
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-family: "DM Sans", sans-serif;
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--muted);
+        padding: 15px 20px;
+        border-bottom: 2px solid transparent;
+        white-space: nowrap;
+        transition: all 0.2s;
+      }
+      .nav-btn:hover {
+        color: var(--ink);
+      }
+      .nav-btn.active {
+        color: var(--accent);
+        border-bottom-color: var(--accent);
+      }
+      .main {
+        max-width: 860px;
+        margin: 0 auto;
+        padding: 44px 40px 80px;
+      }
+      section {
+        display: none;
+      }
+      section.active {
+        display: block;
+      }
+      h2 {
+        font-family: "Fraunces", serif;
+        font-size: 30px;
+        font-weight: 700;
+        margin-bottom: 6px;
+        letter-spacing: -0.02em;
+      }
+      h3 {
+        font-family: "Fraunces", serif;
+        font-size: 20px;
+        font-weight: 600;
+        color: var(--ink);
+        margin: 24px 0 8px;
+        letter-spacing: -0.01em;
+      }
+      p {
+        margin-bottom: 13px;
+        color: var(--ink2);
+        line-height: 1.75;
+      }
+      .section-intro {
+        font-size: 14px;
+        color: var(--muted);
+        margin-bottom: 32px;
+      }
+      strong {
+        color: var(--ink);
+      }
+      .callout {
+        border-left: 3px solid var(--gold);
+        background: rgba(212, 160, 23, 0.07);
+        padding: 14px 18px;
+        border-radius: 0 var(--radius) var(--radius) 0;
+        margin: 16px 0;
+      }
+      .callout.blue {
+        border-color: var(--blue);
+        background: rgba(37, 99, 168, 0.06);
+      }
+      .callout.teal {
+        border-color: var(--teal);
+        background: rgba(14, 124, 107, 0.06);
+      }
+      .callout.red {
+        border-color: var(--accent);
+        background: rgba(192, 57, 43, 0.06);
+      }
+      .callout-title {
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        font-weight: 600;
+        margin-bottom: 5px;
+        color: var(--gold);
+      }
+      .callout.blue .callout-title {
+        color: var(--blue);
+      }
+      .callout.teal .callout-title {
+        color: var(--teal);
+      }
+      .callout.red .callout-title {
+        color: var(--accent);
+      }
+      .callout p {
+        margin: 0;
+        font-size: 14px;
+      }
+
+      /* ANCHOR */
+      .anchor-box {
+        background: var(--ink);
+        color: #f0eeea;
+        border-radius: var(--radius);
+        padding: 16px 20px;
+        margin: 18px 0;
+        display: flex;
+        gap: 14px;
+        align-items: flex-start;
+      }
+      .anchor-icon {
+        font-size: 22px;
+        flex-shrink: 0;
+        margin-top: 1px;
+      }
+      .anchor-label {
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--gold);
+        font-weight: 600;
+        margin-bottom: 4px;
+      }
+      .anchor-box p {
+        font-size: 14px;
+        color: rgba(240, 238, 234, 0.85);
+        margin: 0;
+        line-height: 1.6;
+      }
+      .anchor-box strong {
+        color: #f0eeea;
+      }
+
+      /* RECALL */
+      .recall-box {
+        border: 1.5px dashed rgba(212, 160, 23, 0.5);
+        border-radius: var(--radius);
+        padding: 14px 18px;
+        margin: 18px 0;
+        background: rgba(212, 160, 23, 0.04);
+      }
+      .recall-label {
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--gold);
+        font-weight: 600;
+        margin-bottom: 8px;
+      }
+      .recall-question {
+        font-size: 14px;
+        color: var(--ink2);
+        font-style: italic;
+        margin-bottom: 10px;
+      }
+      .recall-toggle {
+        background: none;
+        border: 1px solid rgba(212, 160, 23, 0.5);
+        color: var(--gold);
+        border-radius: 8px;
+        padding: 6px 14px;
+        font-size: 12px;
+        cursor: pointer;
+        font-family: "DM Sans", sans-serif;
+        transition: all 0.15s;
+      }
+      .recall-toggle:hover {
+        background: rgba(212, 160, 23, 0.1);
+      }
+      .recall-answer {
+        font-size: 14px;
+        color: var(--ink2);
+        margin-top: 10px;
+        padding-top: 10px;
+        border-top: 1px solid rgba(212, 160, 23, 0.2);
+        display: none;
+      }
+      .recall-answer.show {
+        display: block;
+      }
+
+      /* SCIENTIST CARDS */
+      .scientist-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-lg);
+        margin-bottom: 8px;
+        overflow: hidden;
+        transition: box-shadow 0.2s;
+      }
+      .scientist-card:hover {
+        box-shadow: 0 4px 20px rgba(26, 26, 46, 0.07);
+      }
+      .sc-header {
+        display: flex;
+        gap: 16px;
+        align-items: flex-start;
+        padding: 20px 24px 18px;
+        cursor: pointer;
+      }
+      .sc-year {
+        font-family: "Fraunces", serif;
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--accent);
+        background: rgba(192, 57, 43, 0.08);
+        padding: 3px 10px;
+        border-radius: 20px;
+        white-space: nowrap;
+        margin-top: 4px;
+        flex-shrink: 0;
+      }
+      .sc-title h3 {
+        margin: 0 0 3px;
+        font-size: 18px;
+      }
+      .sc-role {
+        font-size: 12px;
+        color: var(--muted);
+      }
+      .sc-tags {
+        margin-top: 6px;
+      }
+      .sc-contribution {
+        display: inline-block;
+        font-size: 11px;
+        font-weight: 500;
+        padding: 2px 9px;
+        border-radius: 20px;
+        margin: 2px 2px 0 0;
+      }
+      .tag-disc {
+        background: rgba(109, 40, 217, 0.1);
+        color: var(--purple);
+      }
+      .tag-model {
+        background: rgba(14, 124, 107, 0.1);
+        color: var(--teal);
+      }
+      .tag-particle {
+        background: rgba(37, 99, 168, 0.1);
+        color: var(--blue);
+      }
+      .tag-quant {
+        background: rgba(212, 160, 23, 0.12);
+        color: #9a7010;
+      }
+      .sc-toggle {
+        margin-left: auto;
+        font-size: 22px;
+        color: var(--muted);
+        transition: transform 0.2s;
+        user-select: none;
+        padding-top: 2px;
+        flex-shrink: 0;
+      }
+      .sc-toggle.open {
+        transform: rotate(45deg);
+        color: var(--accent);
+      }
+      .sc-body {
+        padding: 0 24px 22px;
+        display: none;
+      }
+      .sc-body.open {
+        display: block;
+      }
+      .sc-postulate {
+        background: var(--bg2);
+        border-radius: var(--radius);
+        padding: 11px 15px;
+        margin-bottom: 8px;
+        font-size: 14px;
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+      }
+      .sc-postulate::before {
+        content: "→";
+        color: var(--accent);
+        font-weight: 600;
+        flex-shrink: 0;
+        margin-top: 1px;
+      }
+      .chain-link {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 6px 24px;
+        font-size: 12px;
+        color: var(--muted);
+        font-style: italic;
+      }
+      .chain-link::before,
+      .chain-link::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: var(--border);
+      }
+      .mark-btn {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: none;
+        border: 1.5px solid var(--border);
+        border-radius: var(--radius);
+        padding: 9px 16px;
+        font-family: "DM Sans", sans-serif;
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--muted);
+        cursor: pointer;
+        transition: all 0.2s;
+        margin-top: 20px;
+      }
+      .mark-btn::before {
+        content: "○";
+        font-size: 15px;
+      }
+      .mark-btn.marked {
+        border-color: var(--teal);
+        color: var(--teal);
+        background: rgba(14, 124, 107, 0.06);
+      }
+      .mark-btn.marked::before {
+        content: "✓";
+      }
+
+      /* SECTION REVIEW */
+      .section-review {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-lg);
+        padding: 28px 32px;
+        margin-top: 40px;
+      }
+      .section-review h3 {
+        margin-top: 0;
+        font-size: 17px;
+      }
+      .review-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin-top: 16px;
+      }
+      .review-item {
+        background: var(--bg2);
+        border-radius: var(--radius);
+        padding: 12px 15px;
+        font-size: 13px;
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+        cursor: pointer;
+        transition: background 0.15s;
+        user-select: none;
+      }
+      .review-item:hover {
+        background: var(--bg3);
+      }
+      .review-check {
+        font-size: 16px;
+        flex-shrink: 0;
+      }
+      .review-item.checked {
+        background: rgba(14, 124, 107, 0.08);
+      }
+      .review-item.checked .review-check::after {
+        content: "✓";
+        color: var(--teal);
+      }
+      .review-item:not(.checked) .review-check::after {
+        content: "○";
+        color: var(--muted);
+      }
+
+      /* MODEL SECTION */
+      .models-timeline {
+        display: flex;
+        align-items: flex-start;
+        overflow-x: auto;
+        gap: 0;
+        margin: 0 0 28px;
+        padding-bottom: 8px;
+      }
+      .mt-step {
+        flex-shrink: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 5px;
+        cursor: pointer;
+        padding: 0 4px;
+        transition: opacity 0.2s;
+      }
+      .mt-step:hover {
+        opacity: 0.75;
+      }
+      .mt-dot {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 11px;
+        font-weight: 600;
+        border: 2px solid var(--border);
+        color: var(--muted);
+        transition: all 0.2s;
+      }
+      .mt-step.active .mt-dot {
+        border-color: var(--accent);
+        background: var(--accent);
+        color: white;
+      }
+      .mt-year {
+        font-size: 10px;
+        color: var(--muted);
+      }
+      .mt-name {
+        font-size: 10px;
+        font-weight: 500;
+        color: var(--ink2);
+        text-align: center;
+        max-width: 60px;
+        line-height: 1.3;
+      }
+      .mt-arrow {
+        font-size: 18px;
+        color: var(--border);
+        align-self: center;
+        margin: 0 1px;
+        padding-bottom: 30px;
+        flex-shrink: 0;
+      }
+      .model-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+        display: none;
+      }
+      .model-card.active {
+        display: block;
+      }
+      .model-card-inner {
+        display: grid;
+        grid-template-columns: 190px 1fr;
+      }
+      .model-visual {
+        background: var(--bg2);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 28px 14px;
+        gap: 10px;
+        border-right: 1px solid var(--border);
+      }
+      .model-visual-label {
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--muted);
+        text-align: center;
+      }
+      .model-content {
+        padding: 26px 28px;
+      }
+      .model-year-badge {
+        font-family: "Fraunces", serif;
+        font-size: 11px;
+        font-weight: 600;
+        color: var(--accent);
+        background: rgba(192, 57, 43, 0.08);
+        padding: 3px 10px;
+        border-radius: 20px;
+        display: inline-block;
+        margin-bottom: 10px;
+      }
+      .model-content h3 {
+        margin: 0 0 8px;
+        font-size: 20px;
+      }
+      .model-content p {
+        font-size: 14px;
+      }
+      .verdict-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin-top: 14px;
+      }
+      .verdict {
+        border-radius: var(--radius);
+        padding: 12px 14px;
+        font-size: 13px;
+        line-height: 1.5;
+      }
+      .verdict-ok {
+        background: rgba(14, 124, 107, 0.08);
+        border-left: 3px solid var(--teal);
+      }
+      .verdict-fail {
+        background: rgba(192, 57, 43, 0.06);
+        border-left: 3px solid var(--accent);
+      }
+      .verdict-label {
+        font-size: 10px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        margin-bottom: 4px;
+      }
+      .verdict-ok .verdict-label {
+        color: var(--teal);
+      }
+      .verdict-fail .verdict-label {
+        color: var(--accent);
+      }
+
+      /* BUTTONS */
+      .btn {
+        background: var(--ink);
+        color: #f0eeea;
+        border: none;
+        border-radius: var(--radius);
+        padding: 10px 20px;
+        font-family: "DM Sans", sans-serif;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        transition:
+          background 0.15s,
+          transform 0.1s;
+      }
+      .btn:hover {
+        background: var(--ink2);
+      }
+      .btn:active {
+        transform: scale(0.98);
+      }
+      .btn.outline {
+        background: none;
+        border: 1px solid var(--border);
+        color: var(--ink);
+      }
+      .btn.outline:hover {
+        background: var(--bg2);
+      }
+
+      @media (max-width: 640px) {
+        .hero {
+          padding: 44px 20px 36px;
+        }
+        .main {
+          padding: 28px 20px 60px;
+        }
+        .progress-bar-wrap,
+        .nav-wrap {
+          padding-left: 20px;
+          padding-right: 20px;
+        }
+        .model-card-inner {
+          grid-template-columns: 1fr;
+        }
+        .model-visual {
+          border-right: none;
+          border-bottom: 1px solid var(--border);
+        }
+        .verdict-row {
+          grid-template-columns: 1fr;
+        }
+        .review-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="hero">
+      <div class="hero-inner">
+        <div class="hero-tag">📚 Guía de Estudio Interactiva</div>
+        <h1>Teoría <span>Atómica</span></h1>
+        <p class="hero-sub">
+          Desde Demócrito hasta la mecánica cuántica. Diseñada para que cada
+          concepto se quede contigo mientras lees.
+        </p>
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <strong>2500+</strong><span>años de historia</span>
+          </div>
+          <div class="hero-stat">
+            <strong>9</strong><span>científicos clave</span>
+          </div>
+          <div class="hero-stat">
+            <strong>5</strong><span>modelos atómicos</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="progress-bar-wrap">
+      <div class="progress-inner">
+        <span class="progress-label">Progreso de lectura</span>
+        <div class="progress-track">
+          <div class="progress-fill" id="prog-fill"></div>
+        </div>
+        <span class="progress-pct" id="prog-pct">0%</span>
+      </div>
+    </div>
+
+    <div class="nav-wrap">
+      <div class="nav-inner">
+        <button class="nav-btn active" onclick="showTab('historia', this)">
+          Historia &amp; Autores
+        </button>
+        <button class="nav-btn" onclick="showTab('modelos', this)">
+          Modelos del Átomo
+        </button>
+      </div>
+    </div>
+
+    <div class="main">
+      <!-- ══════════════════════════════════════════
+     HISTORIA & AUTORES
+═══════════════════════════════════════════ -->
+      <section id="tab-historia" class="active">
+        <h2>Historia &amp; Autores</h2>
+        <p class="section-intro">
+          Cada científico resolvió el problema que dejó el anterior. Abre cada
+          tarjeta, reflexiona con los retos de recuerdo y márcala al terminar.
+        </p>
+
+        <!-- DEMÓCRITO -->
+        <div class="scientist-card">
+          <div class="sc-header" onclick="toggleCard(this)">
+            <span class="sc-year">~460 a.C.</span>
+            <div class="sc-title">
+              <h3>Demócrito &amp; Leucipo</h3>
+              <span class="sc-role">Filósofos griegos · Origen de la idea</span>
+              <div class="sc-tags">
+                <span class="sc-contribution tag-disc"
+                  >Origen del término "átomo"</span
+                >
+              </div>
+            </div>
+            <div class="sc-toggle">+</div>
+          </div>
+          <div class="sc-body">
+            <p>
+              Demócrito y su maestro Leucipo propusieron que toda la materia
+              está formada por partículas
+              <strong>indivisibles, eternas e indestructibles</strong> llamadas
+              <em>átomos</em>. No fue ciencia — fue pura filosofía.
+            </p>
+            <div class="sc-postulate">
+              La materia no puede dividirse infinitamente; existe una unidad
+              mínima indivisible.
+            </div>
+            <div class="sc-postulate">
+              Los átomos son idénticos en sustancia pero difieren en forma,
+              tamaño y posición.
+            </div>
+            <div class="sc-postulate">
+              El vacío existe y permite el movimiento de los átomos.
+            </div>
+            <div class="anchor-box">
+              <div class="anchor-icon">⚓</div>
+              <div>
+                <div class="anchor-label">Ancla de memoria</div>
+                <p>
+                  Imagina arena tan fina que ya no se puede cortar más. Eso es
+                  un átomo para Demócrito. El nombre lo inventó él:
+                  <em>a</em> (sin) + <em>tomos</em> (corte) =
+                  <strong>sin corte</strong>. Sin experimentos. Solo pensamiento
+                  puro.
+                </p>
+              </div>
+            </div>
+            <div class="callout red">
+              <div class="callout-title">⚠️ Limitación</div>
+              <p>
+                Aristóteles lo rechazó. Su autoridad retrasó la teoría atómica
+                2000 años. Sin experimentos no hay ciencia.
+              </p>
+            </div>
+            <div class="recall-box">
+              <div class="recall-label">🧠 Reto de recuerdo</div>
+              <div class="recall-question">
+                Sin mirar arriba: ¿qué significa "átomo" en griego y quién lo
+                acuñó?
+              </div>
+              <button class="recall-toggle" onclick="toggleRecall(this)">
+                Ver respuesta
+              </button>
+              <div class="recall-answer">
+                Del griego <em>a-tomos</em> = "sin división". Lo acuñó Demócrito
+                (~460 a.C.). Su maestro Leucipo fue quien primero esbozó la
+                idea.
+              </div>
+            </div>
+            <button class="mark-btn" onclick="markRead(this, 'democrito')">
+              Marcar como leído
+            </button>
+          </div>
+        </div>
+
+        <div class="chain-link">
+          la idea se convierte en ciencia 2200 años después con
+        </div>
+
+        <!-- DALTON -->
+        <div class="scientist-card">
+          <div class="sc-header" onclick="toggleCard(this)">
+            <span class="sc-year">1803</span>
+            <div class="sc-title">
+              <h3>John Dalton</h3>
+              <span class="sc-role"
+                >Químico inglés · Primer modelo científico</span
+              >
+              <div class="sc-tags">
+                <span class="sc-contribution tag-model"
+                  >Modelo esférico macizo</span
+                ><span class="sc-contribution tag-disc"
+                  >Teoría atómica moderna</span
+                >
+              </div>
+            </div>
+            <div class="sc-toggle">+</div>
+          </div>
+          <div class="sc-body">
+            <p>
+              Dalton convirtió la filosofía griega en ciencia real, apoyándose
+              en la Ley de Conservación de la Masa y la Ley de Proporciones
+              Definidas. Propuso cinco postulados verificables.
+            </p>
+            <div class="sc-postulate">
+              La materia está formada por átomos esféricos, indivisibles e
+              indestructibles.
+            </div>
+            <div class="sc-postulate">
+              Los átomos del mismo elemento son idénticos en masa y propiedades.
+            </div>
+            <div class="sc-postulate">
+              Los átomos de elementos distintos tienen masas diferentes.
+            </div>
+            <div class="sc-postulate">
+              Los compuestos se forman combinando átomos en razones enteras
+              simples.
+            </div>
+            <div class="sc-postulate">
+              En una reacción los átomos se reorganizan — no se crean ni
+              destruyen.
+            </div>
+            <div class="callout teal">
+              <div class="callout-title">✅ Vigente hoy</div>
+              <p>
+                Postulados 3 y 5 son pilares de la química moderna. La idea de
+                que cada elemento tiene su masa característica fue
+                revolucionaria.
+              </p>
+            </div>
+            <div class="callout red">
+              <div class="callout-title">✗ Equivocado</div>
+              <p>
+                El átomo sí es divisible. Átomos del mismo elemento pueden tener
+                masas distintas (isótopos).
+              </p>
+            </div>
+            <div class="anchor-box">
+              <div class="anchor-icon">⚓</div>
+              <div>
+                <div class="anchor-label">Ancla de memoria</div>
+                <p>
+                  Dalton = <strong>bola de billar</strong>. Sólida, esférica,
+                  sin interior. El primer modelo con
+                  <em>evidencia experimental</em>. Dalton hace que la filosofía
+                  de Demócrito se convierta en ciencia.
+                </p>
+              </div>
+            </div>
+            <div class="recall-box">
+              <div class="recall-label">🧠 Reto de recuerdo</div>
+              <div class="recall-question">
+                ¿Cuáles dos postulados de Dalton siguen siendo válidos hoy?
+              </div>
+              <button class="recall-toggle" onclick="toggleRecall(this)">
+                Ver respuesta
+              </button>
+              <div class="recall-answer">
+                El postulado 3 (distintos elementos = distintas masas) y el
+                postulado 5 (átomos se reorganizan; no se crean ni destruyen).
+                Este último es la base de la estequiometría.
+              </div>
+            </div>
+            <button class="mark-btn" onclick="markRead(this, 'dalton')">
+              Marcar como leído
+            </button>
+          </div>
+        </div>
+
+        <div class="chain-link">la bola de billar "explota" en 1897 con</div>
+
+        <!-- THOMSON -->
+        <div class="scientist-card">
+          <div class="sc-header" onclick="toggleCard(this)">
+            <span class="sc-year">1897</span>
+            <div class="sc-title">
+              <h3>J.J. Thomson</h3>
+              <span class="sc-role">Físico inglés · Nobel 1906</span>
+              <div class="sc-tags">
+                <span class="sc-contribution tag-particle"
+                  >Descubrimiento del electrón</span
+                ><span class="sc-contribution tag-model"
+                  >Modelo "budín de pasas"</span
+                >
+              </div>
+            </div>
+            <div class="sc-toggle">+</div>
+          </div>
+          <div class="sc-body">
+            <p>
+              Thomson estudió los <strong>rayos catódicos</strong> con un tubo
+              de vacío sometido a campos eléctricos y magnéticos. Midió la
+              desviación del haz y calculó la relación carga/masa de las
+              partículas negativas que lo componían.
+            </p>
+            <div class="callout blue">
+              <div class="callout-title">🧪 Experimento clave</div>
+              <p>
+                Independientemente del material del cátodo, la relación
+                carga/masa del electrón siempre era
+                <strong>e/m = 1.76 × 10¹¹ C/kg</strong>. Conclusión: los
+                electrones son universales, presentes en toda la materia.
+              </p>
+            </div>
+            <div class="sc-postulate">
+              El átomo es una esfera de carga positiva difusa con electrones
+              incrustados (como pasas en un budín).
+            </div>
+            <div class="sc-postulate">
+              La carga total es neutra: la positiva del "budín" compensa
+              exactamente la de los electrones.
+            </div>
+            <div class="anchor-box">
+              <div class="anchor-icon">⚓</div>
+              <div>
+                <div class="anchor-label">Ancla de memoria</div>
+                <p>
+                  Piensa en un <strong>muffin de arándanos</strong>. La masa
+                  esponjosa = carga positiva. Los arándanos azules = electrones.
+                  Thomson descubre que el átomo tiene partes. El nombre "budín
+                  de pasas" lo puso la prensa, no Thomson.
+                </p>
+              </div>
+            </div>
+            <div class="recall-box">
+              <div class="recall-label">🧠 Reto de recuerdo</div>
+              <div class="recall-question">
+                ¿Por qué el resultado del experimento era igual sin importar el
+                material del cátodo?
+              </div>
+              <button class="recall-toggle" onclick="toggleRecall(this)">
+                Ver respuesta
+              </button>
+              <div class="recall-answer">
+                Porque los electrones son universales: están presentes en toda
+                la materia, sin importar el elemento. La relación e/m idéntica
+                para todos los materiales demostró que el electrón es una
+                partícula fundamental.
+              </div>
+            </div>
+            <button class="mark-btn" onclick="markRead(this, 'thomson')">
+              Marcar como leído
+            </button>
+          </div>
+        </div>
+
+        <div class="chain-link">
+          el muffin es destruido por el propio alumno de Thomson
+        </div>
+
+        <!-- RUTHERFORD -->
+        <div class="scientist-card">
+          <div class="sc-header" onclick="toggleCard(this)">
+            <span class="sc-year">1911</span>
+            <div class="sc-title">
+              <h3>Ernest Rutherford</h3>
+              <span class="sc-role"
+                >Físico neozelandés-británico · Padre del núcleo</span
+              >
+              <div class="sc-tags">
+                <span class="sc-contribution tag-disc">Núcleo atómico</span
+                ><span class="sc-contribution tag-model">Modelo nuclear</span>
+              </div>
+            </div>
+            <div class="sc-toggle">+</div>
+          </div>
+          <div class="sc-body">
+            <p>
+              Rutherford era alumno de Thomson. Diseñó el experimento de la
+              <strong>lámina de oro</strong> para <em>confirmar</em> el modelo
+              de su maestro. Lo que encontró lo dejó atónito.
+            </p>
+            <div class="callout blue">
+              <div class="callout-title">
+                🧪 Experimento de la lámina de oro (1909–1911)
+              </div>
+              <p>
+                Disparó partículas α contra una lámina de oro de ~400 átomos de
+                espesor. Según Thomson, todas deberían pasar casi sin desviarse.
+                Resultado: la mayoría sí pasó, pero
+                <strong>1 de cada 8000 rebotó casi de vuelta</strong>.
+              </p>
+            </div>
+            <div class="anchor-box">
+              <div class="anchor-icon">⚓</div>
+              <div>
+                <div class="anchor-label">Frase original de Rutherford</div>
+                <p>
+                  "Fue casi tan increíble como disparar proyectiles de
+                  artillería a papel tisú y que te los devolvieran." — Lo que
+                  rebota solo puede ser un
+                  <strong>núcleo pequeñísimo, denso y positivo</strong>.
+                </p>
+              </div>
+            </div>
+            <div class="sc-postulate">
+              El átomo tiene un núcleo central pequeño (~10⁻¹⁵ m), densísimo y
+              con carga positiva.
+            </div>
+            <div class="sc-postulate">
+              Los electrones orbitan lejos del núcleo en el espacio vacío
+              (~10⁻¹⁰ m).
+            </div>
+            <div class="sc-postulate">
+              El átomo es 99.99% vacío. Si el núcleo fuera una canica, los
+              electrones estarían a 500 metros.
+            </div>
+            <div class="callout red">
+              <div class="callout-title">✗ Problema no resuelto</div>
+              <p>
+                Un electrón en órbita circular irradia energía (física clásica)
+                → espiralaría y colapsaría en ~10⁻⁸ s. Rutherford no tenía
+                respuesta.
+              </p>
+            </div>
+            <div class="recall-box">
+              <div class="recall-label">🧠 Reto de recuerdo</div>
+              <div class="recall-question">
+                ¿Qué fracción de partículas alfa rebotó y qué demostró eso?
+              </div>
+              <button class="recall-toggle" onclick="toggleRecall(this)">
+                Ver respuesta
+              </button>
+              <div class="recall-answer">
+                1 de cada 8000. Esa pequeña fracción demostró que existe un
+                núcleo muy pequeño pero muy denso y positivo. Las demás pasaron
+                por el espacio vacío que rodea al núcleo.
+              </div>
+            </div>
+            <button class="mark-btn" onclick="markRead(this, 'rutherford')">
+              Marcar como leído
+            </button>
+          </div>
+        </div>
+
+        <div class="chain-link">el colapso orbital se resuelve con</div>
+
+        <!-- BOHR -->
+        <div class="scientist-card">
+          <div class="sc-header" onclick="toggleCard(this)">
+            <span class="sc-year">1913</span>
+            <div class="sc-title">
+              <h3>Niels Bohr</h3>
+              <span class="sc-role">Físico danés · Nobel 1922</span>
+              <div class="sc-tags">
+                <span class="sc-contribution tag-model"
+                  >Modelo planetario cuantizado</span
+                ><span class="sc-contribution tag-quant"
+                  >Cuantización de energía</span
+                >
+              </div>
+            </div>
+            <div class="sc-toggle">+</div>
+          </div>
+          <div class="sc-body">
+            <p>
+              Bohr resolvió el colapso de Rutherford tomando la cuantización de
+              Planck. Su modelo predice con exactitud el
+              <strong>espectro de líneas del hidrógeno</strong> — algo que
+              ningún modelo anterior logró.
+            </p>
+            <div class="sc-postulate">
+              Los electrones solo pueden existir en órbitas circulares
+              específicas con energías discretas (n = 1, 2, 3…).
+            </div>
+            <div class="sc-postulate">
+              Mientras el electrón está en su órbita, NO irradia energía —
+              postulado anti-clásico, pura audacia.
+            </div>
+            <div class="sc-postulate">
+              Solo emite o absorbe energía al saltar entre niveles: ΔE = hf.
+              Cada salto emite un fotón de color exacto.
+            </div>
+            <div class="sc-postulate">
+              El momento angular está cuantizado: L = n·ℏ.
+            </div>
+            <div class="callout teal">
+              <div class="callout-title">
+                🌈 Por qué los espectros de líneas son la prueba
+              </div>
+              <p>
+                Cada elemento emite solo ciertos colores al calentarse. Bohr
+                explicó exactamente esas líneas para el hidrógeno. Eso convenció
+                al mundo científico.
+              </p>
+            </div>
+            <div class="anchor-box">
+              <div class="anchor-icon">⚓</div>
+              <div>
+                <div class="anchor-label">Ancla de memoria</div>
+                <p>
+                  Bohr = <strong>pistas de atletismo numeradas</strong>. El
+                  electrón solo puede correr en la pista 1, 2 o 3. Para cambiar
+                  de pista debe pagar (absorber) o cobrar (emitir) energía
+                  exacta. No puede estar entre pistas.
+                </p>
+              </div>
+            </div>
+            <div class="callout red">
+              <div class="callout-title">✗ Límite</div>
+              <p>
+                Solo funciona para hidrógeno (1 electrón). Con más electrones
+                falla. En 1916 Sommerfeld lo extendió con órbitas elípticas.
+              </p>
+            </div>
+            <div class="recall-box">
+              <div class="recall-label">🧠 Reto de recuerdo</div>
+              <div class="recall-question">
+                ¿Qué pasa energéticamente cuando un electrón salta a un nivel
+                inferior?
+              </div>
+              <button class="recall-toggle" onclick="toggleRecall(this)">
+                Ver respuesta
+              </button>
+              <div class="recall-answer">
+                Emite un fotón cuya energía = diferencia entre los dos niveles:
+                ΔE = hf. Si el salto termina en n=2 (serie de Balmer), el fotón
+                es luz visible de un color concreto.
+              </div>
+            </div>
+            <button class="mark-btn" onclick="markRead(this, 'bohr')">
+              Marcar como leído
+            </button>
+          </div>
+        </div>
+
+        <div class="chain-link">la onda entra al átomo con</div>
+
+        <!-- DE BROGLIE -->
+        <div class="scientist-card">
+          <div class="sc-header" onclick="toggleCard(this)">
+            <span class="sc-year">1924</span>
+            <div class="sc-title">
+              <h3>Louis de Broglie</h3>
+              <span class="sc-role">Físico francés · Nobel 1929</span>
+              <div class="sc-tags">
+                <span class="sc-contribution tag-quant"
+                  >Dualidad onda-partícula</span
+                >
+              </div>
+            </div>
+            <div class="sc-toggle">+</div>
+          </div>
+          <div class="sc-body">
+            <p>
+              Einstein demostró que la luz (onda) se comporta como partícula. De
+              Broglie propuso lo inverso en su tesis doctoral:
+              <strong>la materia también se comporta como onda</strong>. El
+              comité de tesis consultó con Einstein antes de aprobarla.
+            </p>
+            <div class="callout blue">
+              <div class="callout-title">🔢 Ecuación de De Broglie</div>
+              <p>
+                <strong>λ = h / (mv)</strong> — toda partícula en movimiento
+                tiene una longitud de onda. Para objetos grandes es
+                imperceptible. Para electrones es del tamaño del átomo: el
+                efecto es real y medible.
+              </p>
+            </div>
+            <div class="sc-postulate">
+              Las órbitas estables de Bohr son donde el electrón forma una onda
+              estacionaria: cabe un número entero de longitudes de onda en la
+              circunferencia → justifica la cuantización.
+            </div>
+            <div class="anchor-box">
+              <div class="anchor-icon">⚓</div>
+              <div>
+                <div class="anchor-label">Ancla de memoria</div>
+                <p>
+                  De Broglie =
+                  <strong>electrones que vibran como cuerdas de guitarra</strong
+                  >. Una cuerda solo produce la nota fundamental y sus armónicos
+                  (1, 2, 3 ondas completas). El electrón igual: solo ciertas
+                  "notas" (órbitas) están permitidas.
+                </p>
+              </div>
+            </div>
+            <div class="recall-box">
+              <div class="recall-label">🧠 Reto de recuerdo</div>
+              <div class="recall-question">
+                ¿Quiénes confirmaron experimentalmente la onda de De Broglie?
+              </div>
+              <button class="recall-toggle" onclick="toggleRecall(this)">
+                Ver respuesta
+              </button>
+              <div class="recall-answer">
+                Davisson y Germer (1927): dispararon electrones contra un
+                cristal de níquel y observaron patrones de difracción —
+                comportamiento ondulatorio puro. Las longitudes de onda
+                coincidieron con la fórmula de De Broglie.
+              </div>
+            </div>
+            <button class="mark-btn" onclick="markRead(this, 'debroglie')">
+              Marcar como leído
+            </button>
+          </div>
+        </div>
+
+        <div class="chain-link">la ecuación de onda completa viene de</div>
+
+        <!-- SCHRÖDINGER -->
+        <div class="scientist-card">
+          <div class="sc-header" onclick="toggleCard(this)">
+            <span class="sc-year">1926</span>
+            <div class="sc-title">
+              <h3>Erwin Schrödinger</h3>
+              <span class="sc-role">Físico austriaco · Nobel 1933</span>
+              <div class="sc-tags">
+                <span class="sc-contribution tag-quant">Ecuación de onda</span
+                ><span class="sc-contribution tag-model"
+                  >Modelo cuántico / orbitales</span
+                >
+              </div>
+            </div>
+            <div class="sc-toggle">+</div>
+          </div>
+          <div class="sc-body">
+            <p>
+              Schrödinger formalizó la onda de De Broglie con una ecuación
+              diferencial. Su solución — la función de onda ψ — describe dónde
+              <em>podría estar</em> el electrón. El cuadrado |ψ|² da la
+              <strong>probabilidad de hallarlo</strong> en cada punto del
+              espacio.
+            </p>
+            <div class="callout blue">
+              <div class="callout-title">
+                📐 La ecuación (versión conceptual)
+              </div>
+              <p>
+                <strong>Ĥψ = Eψ</strong> — Ĥ opera sobre ψ para extraer la
+                energía E. Las soluciones posibles son los orbitales atómicos,
+                cada uno con valores concretos de n, l, mₗ.
+              </p>
+            </div>
+            <div class="sc-postulate">
+              El electrón no tiene una trayectoria definida — existe en una
+              "nube de probabilidad" llamada orbital.
+            </div>
+            <div class="sc-postulate">
+              Un orbital es la región del espacio donde hay ~90% de probabilidad
+              de hallar al electrón.
+            </div>
+            <div class="sc-postulate">
+              Los orbitales tienen formas: s (esfera), p (doble lóbulo), d y f
+              (formas complejas).
+            </div>
+            <div class="anchor-box">
+              <div class="anchor-icon">⚓</div>
+              <div>
+                <div class="anchor-label">Clave — orbital ≠ órbita</div>
+                <p>
+                  <strong>Órbita</strong> = carril circular fijo, como la Luna.
+                  <strong>Orbital</strong> = nube de probabilidad con forma.
+                  Schrödinger reemplaza el carril por una nube.
+                  <strong
+                    >Este es el modelo que usa toda la química hoy.</strong
+                  >
+                </p>
+              </div>
+            </div>
+            <div class="recall-box">
+              <div class="recall-label">🧠 Reto de recuerdo</div>
+              <div class="recall-question">
+                ¿Qué representa |ψ|² en la ecuación de Schrödinger?
+              </div>
+              <button class="recall-toggle" onclick="toggleRecall(this)">
+                Ver respuesta
+              </button>
+              <div class="recall-answer">
+                La densidad de probabilidad: |ψ|² en un punto del espacio =
+                probabilidad de encontrar al electrón ahí. Donde la nube es más
+                densa → más probable hallarlo. El orbital contiene ~90% de esa
+                probabilidad total.
+              </div>
+            </div>
+            <button class="mark-btn" onclick="markRead(this, 'schrodinger')">
+              Marcar como leído
+            </button>
+          </div>
+        </div>
+
+        <div class="chain-link">
+          y el límite de lo que se puede conocer lo fija
+        </div>
+
+        <!-- HEISENBERG -->
+        <div class="scientist-card">
+          <div class="sc-header" onclick="toggleCard(this)">
+            <span class="sc-year">1927</span>
+            <div class="sc-title">
+              <h3>Werner Heisenberg</h3>
+              <span class="sc-role">Físico alemán · Nobel 1932</span>
+              <div class="sc-tags">
+                <span class="sc-contribution tag-quant"
+                  >Principio de incertidumbre</span
+                >
+              </div>
+            </div>
+            <div class="sc-toggle">+</div>
+          </div>
+          <div class="sc-body">
+            <p>
+              Heisenberg formuló el principio más perturbador de la física:
+              <strong
+                >no se puede conocer con precisión absoluta la posición y el
+                movimiento de una partícula al mismo tiempo</strong
+              >. No es un límite tecnológico — es una propiedad de la realidad.
+            </p>
+            <div class="callout blue">
+              <div class="callout-title">🔢 Principio de Incertidumbre</div>
+              <p>
+                <strong>Δx · Δp ≥ ℏ/2</strong> — Incertidumbre en posición ×
+                incertidumbre en momento ≥ ℏ/2. Cuanto más preciso sabes dónde
+                está → menos puedes saber a qué velocidad va.
+              </p>
+            </div>
+            <div class="sc-postulate">
+              El acto de medir perturba el sistema. Para "ver" un electrón
+              necesitas iluminarlo con un fotón — ese fotón le cambia el
+              movimiento.
+            </div>
+            <div class="sc-postulate">
+              Justifica por qué el electrón no puede tener una órbita definida:
+              "posición y velocidad exactas" viola este principio.
+            </div>
+            <div class="anchor-box">
+              <div class="anchor-icon">⚓</div>
+              <div>
+                <div class="anchor-label">Ancla de memoria</div>
+                <p>
+                  Para ver un electrón tienes que
+                  <strong>golpearlo con luz</strong>. Ese golpe lo mueve. Con
+                  luz precisa (corta longitud de onda) el golpe es fuerte →
+                  posición exacta pero velocidad desconocida.
+                  <strong>Medir siempre perturba. Sin escape.</strong>
+                </p>
+              </div>
+            </div>
+            <div class="recall-box">
+              <div class="recall-label">🧠 Reto de recuerdo</div>
+              <div class="recall-question">
+                ¿Por qué el principio de Heisenberg justifica los orbitales en
+                lugar de órbitas?
+              </div>
+              <button class="recall-toggle" onclick="toggleRecall(this)">
+                Ver respuesta
+              </button>
+              <div class="recall-answer">
+                Una órbita requiere conocer posición y velocidad exactas
+                simultáneamente. Heisenberg demuestra que eso es imposible. Sin
+                trayectoria posible, solo podemos hablar de probabilidades → los
+                orbitales de Schrödinger son la consecuencia directa.
+              </div>
+            </div>
+            <button class="mark-btn" onclick="markRead(this, 'heisenberg')">
+              Marcar como leído
+            </button>
+          </div>
+        </div>
+
+        <div class="chain-link">el núcleo queda completo en 1932 con</div>
+
+        <!-- CHADWICK -->
+        <div class="scientist-card">
+          <div class="sc-header" onclick="toggleCard(this)">
+            <span class="sc-year">1932</span>
+            <div class="sc-title">
+              <h3>James Chadwick</h3>
+              <span class="sc-role">Físico inglés · Nobel 1935</span>
+              <div class="sc-tags">
+                <span class="sc-contribution tag-particle"
+                  >Descubrimiento del neutrón</span
+                >
+              </div>
+            </div>
+            <div class="sc-toggle">+</div>
+          </div>
+          <div class="sc-body">
+            <p>
+              Problema sin resolver: el núcleo del helio pesa 4 u pero solo
+              tiene 2 protones (masa esperada ≈ 2 u). Faltaba algo neutro y
+              masivo. Chadwick lo encontró.
+            </p>
+            <div class="callout blue">
+              <div class="callout-title">🧪 Experimento</div>
+              <p>
+                Bombardeó berilio con partículas α. Detectó una radiación muy
+                penetrante que no se desviaba con campos eléctricos ni
+                magnéticos (neutra). Midió su masa haciéndola chocar con
+                hidrógeno y nitrógeno:
+                <strong>masa ≈ 1.675 × 10⁻²⁷ kg ≈ 1 u</strong>.
+              </p>
+            </div>
+            <div class="sc-postulate">
+              El neutrón tiene carga = 0 y masa ≈ 1 u (ligeramente mayor que el
+              protón).
+            </div>
+            <div class="sc-postulate">
+              Los neutrones están en el núcleo con los protones. A = Z + N.
+            </div>
+            <div class="sc-postulate">
+              Los isótopos existen porque el mismo Z puede tener diferente N:
+              mismo elemento, diferente masa.
+            </div>
+            <div class="anchor-box">
+              <div class="anchor-icon">⚓</div>
+              <div>
+                <div class="anchor-label">Ancla de memoria</div>
+                <p>
+                  El neutrón es el
+                  <strong>"pegamento invisible" del núcleo</strong>: sin carga
+                  (no lo detectan los campos), pero con masa que explica por qué
+                  el helio-4 pesa 4 u aunque solo tiene 2 protones. 2p + 2n = 4
+                  u. El misterio resuelto.
+                </p>
+              </div>
+            </div>
+            <div class="recall-box">
+              <div class="recall-label">🧠 Reto de recuerdo</div>
+              <div class="recall-question">
+                ¿Qué problema numérico resuelve el neutrón en el helio-4?
+              </div>
+              <button class="recall-toggle" onclick="toggleRecall(this)">
+                Ver respuesta
+              </button>
+              <div class="recall-answer">
+                El helio-4 tiene Z=2 (2 protones ≈ 2 u) pero su masa real es ≈ 4
+                u. Los 2 neutrones aportan las 2 u restantes: 2 protones (2 u) +
+                2 neutrones (2 u) = 4 u. Sin neutrones la masa del núcleo nunca
+                cuadraba.
+              </div>
+            </div>
+            <button class="mark-btn" onclick="markRead(this, 'chadwick')">
+              Marcar como leído
+            </button>
+          </div>
+        </div>
+
+        <!-- REPASO GENERAL -->
+        <div class="section-review">
+          <h3>🔁 Repaso rápido — ¿cuánto recuerdas?</h3>
+          <p style="font-size: 13px; color: var(--muted); margin-bottom: 0">
+            Marca los que puedas completar sin mirar. Los que no puedas, regresa
+            a esa tarjeta.
+          </p>
+          <div class="review-grid">
+            <div class="review-item" onclick="this.classList.toggle('checked')">
+              <span class="review-check"></span
+              ><span>Demócrito: significado de la palabra "átomo"</span>
+            </div>
+            <div class="review-item" onclick="this.classList.toggle('checked')">
+              <span class="review-check"></span
+              ><span>Dalton: los 2 postulados que siguen vigentes</span>
+            </div>
+            <div class="review-item" onclick="this.classList.toggle('checked')">
+              <span class="review-check"></span
+              ><span>Thomson: qué midió y con qué instrumento</span>
+            </div>
+            <div class="review-item" onclick="this.classList.toggle('checked')">
+              <span class="review-check"></span
+              ><span>Rutherford: fracción de partículas que rebotó</span>
+            </div>
+            <div class="review-item" onclick="this.classList.toggle('checked')">
+              <span class="review-check"></span
+              ><span>Bohr: qué ocurre cuando el electrón "salta"</span>
+            </div>
+            <div class="review-item" onclick="this.classList.toggle('checked')">
+              <span class="review-check"></span
+              ><span>De Broglie: la analogía de la cuerda de guitarra</span>
+            </div>
+            <div class="review-item" onclick="this.classList.toggle('checked')">
+              <span class="review-check"></span
+              ><span>Schrödinger: orbital vs órbita (la diferencia)</span>
+            </div>
+            <div class="review-item" onclick="this.classList.toggle('checked')">
+              <span class="review-check"></span
+              ><span>Heisenberg: por qué medir siempre perturba</span>
+            </div>
+            <div class="review-item" onclick="this.classList.toggle('checked')">
+              <span class="review-check"></span
+              ><span>Chadwick: el problema numérico del helio-4</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══════════════════════════════════════════
+     MODELOS DEL ÁTOMO
+═══════════════════════════════════════════ -->
+      <section id="tab-modelos">
+        <h2>Modelos del Átomo</h2>
+        <p class="section-intro">
+          Cinco modelos, cada uno derribado por un experimento que no podía
+          explicar. Selecciona cada uno para ver su visual, fortalezas y fallo
+          fatal.
+        </p>
+
+        <div class="models-timeline">
+          <div class="mt-step active" onclick="showModel(0, this)">
+            <div class="mt-dot">D</div>
+            <div class="mt-year">1803</div>
+            <div class="mt-name">Dalton</div>
+          </div>
+          <div class="mt-arrow">›</div>
+          <div class="mt-step" onclick="showModel(1, this)">
+            <div class="mt-dot">Th</div>
+            <div class="mt-year">1904</div>
+            <div class="mt-name">Thomson</div>
+          </div>
+          <div class="mt-arrow">›</div>
+          <div class="mt-step" onclick="showModel(2, this)">
+            <div class="mt-dot">R</div>
+            <div class="mt-year">1911</div>
+            <div class="mt-name">Rutherford</div>
+          </div>
+          <div class="mt-arrow">›</div>
+          <div class="mt-step" onclick="showModel(3, this)">
+            <div class="mt-dot">B</div>
+            <div class="mt-year">1913</div>
+            <div class="mt-name">Bohr</div>
+          </div>
+          <div class="mt-arrow">›</div>
+          <div class="mt-step" onclick="showModel(4, this)">
+            <div class="mt-dot">S</div>
+            <div class="mt-year">1926</div>
+            <div class="mt-name">Cuántico</div>
+          </div>
+        </div>
+
+        <!-- M0: DALTON -->
+        <div class="model-card active" id="model-0">
+          <div class="model-card-inner">
+            <div class="model-visual">
+              <svg width="120" height="120" viewBox="0 0 120 120">
+                <circle cx="60" cy="60" r="48" fill="#c0392b" opacity=".9" />
+                <circle
+                  cx="60"
+                  cy="60"
+                  r="48"
+                  fill="none"
+                  stroke="#922b21"
+                  stroke-width="2"
+                />
+                <text
+                  x="60"
+                  y="56"
+                  text-anchor="middle"
+                  font-family="Fraunces,serif"
+                  font-size="13"
+                  fill="white"
+                  font-weight="700"
+                >
+                  ÁTOMO
+                </text>
+                <text
+                  x="60"
+                  y="72"
+                  text-anchor="middle"
+                  font-family="DM Sans,sans-serif"
+                  font-size="10"
+                  fill="rgba(255,255,255,.7)"
+                >
+                  sólido e indivisible
+                </text>
+              </svg>
+              <div class="model-visual-label">Esfera maciza</div>
+            </div>
+            <div class="model-content">
+              <span class="model-year-badge">1803 · John Dalton</span>
+              <h3>Modelo de la Esfera Maciza</h3>
+              <p>
+                El átomo como una <strong>bola de billar</strong>: sólido,
+                esférico, sin estructura interna. Todos los átomos del mismo
+                elemento son idénticos. Los de distintos elementos tienen
+                esferas de diferente masa.
+              </p>
+              <div class="anchor-box" style="margin: 12px 0">
+                <div class="anchor-icon">⚓</div>
+                <div>
+                  <div class="anchor-label">Imagen mental</div>
+                  <p>
+                    Una canica de mármol maciza. Nada dentro. Solo masa y
+                    tamaño.
+                  </p>
+                </div>
+              </div>
+              <div class="verdict-row">
+                <div class="verdict verdict-ok">
+                  <div class="verdict-label">✅ Lo que explicó</div>
+                  Por qué los elementos se combinan en razones simples. La base
+                  de toda la estequiometría química.
+                </div>
+                <div class="verdict verdict-fail">
+                  <div class="verdict-label">✗ Fallo fatal</div>
+                  Thomson (1897) descubrió que el átomo contiene partes
+                  negativas (electrones). El átomo NO era macizo.
+                </div>
+              </div>
+              <div class="recall-box" style="margin-top: 16px">
+                <div class="recall-label">🧠 Reto de recuerdo</div>
+                <div class="recall-question">
+                  ¿Qué experimento refutó este modelo y qué descubrió?
+                </div>
+                <button class="recall-toggle" onclick="toggleRecall(this)">
+                  Ver respuesta
+                </button>
+                <div class="recall-answer">
+                  El tubo de rayos catódicos de Thomson (1897). Descubrió los
+                  electrones: partículas negativas universales dentro del átomo.
+                  El átomo sí tiene partes → el modelo de Dalton quedó obsoleto.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- M1: THOMSON -->
+        <div class="model-card" id="model-1">
+          <div class="model-card-inner">
+            <div class="model-visual">
+              <svg width="130" height="130" viewBox="0 0 130 130">
+                <circle
+                  cx="65"
+                  cy="65"
+                  r="52"
+                  fill="#e8d5f5"
+                  stroke="#6d28d9"
+                  stroke-width="1.5"
+                />
+                <circle cx="40" cy="50" r="9" fill="#2563a8" />
+                <text
+                  x="40"
+                  y="54"
+                  text-anchor="middle"
+                  font-family="DM Sans"
+                  font-size="9"
+                  fill="white"
+                >
+                  e⁻
+                </text>
+                <circle cx="90" cy="50" r="9" fill="#2563a8" />
+                <text
+                  x="90"
+                  y="54"
+                  text-anchor="middle"
+                  font-family="DM Sans"
+                  font-size="9"
+                  fill="white"
+                >
+                  e⁻
+                </text>
+                <circle cx="50" cy="84" r="9" fill="#2563a8" />
+                <text
+                  x="50"
+                  y="88"
+                  text-anchor="middle"
+                  font-family="DM Sans"
+                  font-size="9"
+                  fill="white"
+                >
+                  e⁻
+                </text>
+                <circle cx="80" cy="84" r="9" fill="#2563a8" />
+                <text
+                  x="80"
+                  y="88"
+                  text-anchor="middle"
+                  font-family="DM Sans"
+                  font-size="9"
+                  fill="white"
+                >
+                  e⁻
+                </text>
+                <text
+                  x="65"
+                  y="68"
+                  text-anchor="middle"
+                  font-family="DM Sans"
+                  font-size="9"
+                  fill="#6d28d9"
+                >
+                  + + + +
+                </text>
+              </svg>
+              <div class="model-visual-label">Budín de pasas</div>
+            </div>
+            <div class="model-content">
+              <span class="model-year-badge">1904 · J.J. Thomson</span>
+              <h3>Modelo del Budín de Pasas</h3>
+              <p>
+                El átomo es una
+                <strong>esfera de carga positiva difusa</strong> con electrones
+                incrustados. La carga total es neutra. Los electrones flotan
+                inmersos en la "masa" positiva.
+              </p>
+              <div class="anchor-box" style="margin: 12px 0">
+                <div class="anchor-icon">⚓</div>
+                <div>
+                  <div class="anchor-label">Imagen mental</div>
+                  <p>
+                    Un muffin de arándanos. Arándanos azules = electrones. Masa
+                    esponjosa = carga positiva difusa.
+                  </p>
+                </div>
+              </div>
+              <div class="verdict-row">
+                <div class="verdict verdict-ok">
+                  <div class="verdict-label">✅ Lo que explicó</div>
+                  La existencia de electrones dentro del átomo. La neutralidad
+                  eléctrica del átomo.
+                </div>
+                <div class="verdict verdict-fail">
+                  <div class="verdict-label">✗ Fallo fatal</div>
+                  El experimento de la lámina de oro de Rutherford demostró que
+                  la carga positiva NO está distribuida — está concentrada en un
+                  núcleo muy pequeño.
+                </div>
+              </div>
+              <div class="recall-box" style="margin-top: 16px">
+                <div class="recall-label">🧠 Reto de recuerdo</div>
+                <div class="recall-question">
+                  En el modelo de Thomson, ¿qué representan el "budín" y las
+                  "pasas"?
+                </div>
+                <button class="recall-toggle" onclick="toggleRecall(this)">
+                  Ver respuesta
+                </button>
+                <div class="recall-answer">
+                  "Budín" = la esfera de carga positiva difusa que llena todo el
+                  átomo. "Pasas" = los electrones negativos incrustados en esa
+                  masa. La suma es neutra. El nombre lo inventó la prensa, no
+                  Thomson.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- M2: RUTHERFORD -->
+        <div class="model-card" id="model-2">
+          <div class="model-card-inner">
+            <div class="model-visual">
+              <svg width="140" height="140" viewBox="0 0 140 140">
+                <circle
+                  cx="70"
+                  cy="70"
+                  r="62"
+                  fill="none"
+                  stroke="rgba(26,26,46,.08)"
+                  stroke-width="1"
+                  stroke-dasharray="4 4"
+                />
+                <circle cx="70" cy="70" r="10" fill="#c0392b" />
+                <text
+                  x="70"
+                  y="74"
+                  text-anchor="middle"
+                  font-family="DM Sans"
+                  font-size="8"
+                  fill="white"
+                  font-weight="600"
+                >
+                  p⁺
+                </text>
+                <ellipse
+                  cx="70"
+                  cy="70"
+                  rx="50"
+                  ry="22"
+                  fill="none"
+                  stroke="#2563a8"
+                  stroke-width="1.5"
+                  stroke-dasharray="5 3"
+                  opacity=".7"
+                />
+                <circle cx="120" cy="70" r="7" fill="#2563a8" />
+                <text
+                  x="120"
+                  y="74"
+                  text-anchor="middle"
+                  font-family="DM Sans"
+                  font-size="8"
+                  fill="white"
+                >
+                  e⁻
+                </text>
+                <ellipse
+                  cx="70"
+                  cy="70"
+                  rx="22"
+                  ry="50"
+                  fill="none"
+                  stroke="#2563a8"
+                  stroke-width="1.5"
+                  stroke-dasharray="5 3"
+                  opacity=".4"
+                />
+                <circle cx="70" cy="20" r="7" fill="#2563a8" />
+                <text
+                  x="70"
+                  y="24"
+                  text-anchor="middle"
+                  font-family="DM Sans"
+                  font-size="8"
+                  fill="white"
+                >
+                  e⁻
+                </text>
+              </svg>
+              <div class="model-visual-label">Nuclear</div>
+            </div>
+            <div class="model-content">
+              <span class="model-year-badge">1911 · Ernest Rutherford</span>
+              <h3>Modelo Nuclear</h3>
+              <p>
+                Núcleo pequeño, denso y positivo en el centro. Electrones
+                girando a gran distancia, en el espacio vacío. El átomo es
+                <strong>99.99% vacío</strong>.
+              </p>
+              <div class="anchor-box" style="margin: 12px 0">
+                <div class="anchor-icon">⚓</div>
+                <div>
+                  <div class="anchor-label">Imagen mental</div>
+                  <p>
+                    Sistema solar: el sol (núcleo) en el centro y planetas
+                    (electrones) orbitando lejos. Casi todo vacío entre ellos.
+                  </p>
+                </div>
+              </div>
+              <div class="verdict-row">
+                <div class="verdict verdict-ok">
+                  <div class="verdict-label">✅ Lo que explicó</div>
+                  El rebote de partículas alfa. La concentración de masa y carga
+                  positiva en el núcleo. El 99.99% de vacío.
+                </div>
+                <div class="verdict verdict-fail">
+                  <div class="verdict-label">✗ Fallo fatal</div>
+                  Un electrón en órbita circular irradia energía → espiralaría y
+                  colapsaría en 10⁻⁸ s. No explicaba por qué el átomo es
+                  estable.
+                </div>
+              </div>
+              <div class="recall-box" style="margin-top: 16px">
+                <div class="recall-label">🧠 Reto de recuerdo</div>
+                <div class="recall-question">
+                  Si el núcleo fuera una pelota de fútbol, ¿a qué distancia
+                  estarían los electrones?
+                </div>
+                <button class="recall-toggle" onclick="toggleRecall(this)">
+                  Ver respuesta
+                </button>
+                <div class="recall-answer">
+                  El núcleo (~10⁻¹⁵ m) vs el átomo (~10⁻¹⁰ m) da una relación
+                  1:100.000. Si el núcleo fuera una pelota de fútbol (25 cm),
+                  los electrones estarían a ~25 km. El átomo es casi todo vacío.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- M3: BOHR -->
+        <div class="model-card" id="model-3">
+          <div class="model-card-inner">
+            <div class="model-visual">
+              <svg width="150" height="150" viewBox="0 0 150 150">
+                <circle cx="75" cy="75" r="12" fill="#c0392b" />
+                <text
+                  x="75"
+                  y="79"
+                  text-anchor="middle"
+                  font-family="DM Sans"
+                  font-size="9"
+                  fill="white"
+                >
+                  p⁺
+                </text>
+                <circle
+                  cx="75"
+                  cy="75"
+                  r="28"
+                  fill="none"
+                  stroke="#e74c3c"
+                  stroke-width="1.5"
+                />
+                <text
+                  x="107"
+                  y="70"
+                  font-family="DM Sans"
+                  font-size="9"
+                  fill="#e74c3c"
+                >
+                  n=1
+                </text>
+                <circle cx="103" cy="75" r="6" fill="#2563a8" />
+                <circle
+                  cx="75"
+                  cy="75"
+                  r="48"
+                  fill="none"
+                  stroke="#e67e22"
+                  stroke-width="1.5"
+                />
+                <text
+                  x="126"
+                  y="70"
+                  font-family="DM Sans"
+                  font-size="9"
+                  fill="#e67e22"
+                >
+                  n=2
+                </text>
+                <circle cx="75" cy="27" r="6" fill="#2563a8" />
+                <circle cx="123" cy="75" r="6" fill="#2563a8" />
+                <circle
+                  cx="75"
+                  cy="75"
+                  r="65"
+                  fill="none"
+                  stroke="#2563a8"
+                  stroke-width="1.2"
+                  stroke-dasharray="5 3"
+                />
+                <text
+                  x="143"
+                  y="70"
+                  font-family="DM Sans"
+                  font-size="8"
+                  fill="#2563a8"
+                >
+                  n=3
+                </text>
+                <line
+                  x1="90"
+                  y1="58"
+                  x2="110"
+                  y2="38"
+                  stroke="#f39c12"
+                  stroke-width="1.5"
+                  marker-end="url(#ah3)"
+                />
+                <text
+                  x="112"
+                  y="35"
+                  font-family="DM Sans"
+                  font-size="8"
+                  fill="#f39c12"
+                >
+                  hf
+                </text>
+                <defs>
+                  <marker
+                    id="ah3"
+                    markerWidth="5"
+                    markerHeight="5"
+                    refX="2.5"
+                    refY="2.5"
+                    orient="auto"
+                  >
+                    <path d="M0,0L0,5L5,2.5z" fill="#f39c12" />
+                  </marker>
+                </defs>
+              </svg>
+              <div class="model-visual-label">Planetario cuantizado</div>
+            </div>
+            <div class="model-content">
+              <span class="model-year-badge">1913 · Niels Bohr</span>
+              <h3>Modelo Planetario Cuantizado</h3>
+              <p>
+                Los electrones solo pueden estar en
+                <strong>niveles de energía discretos</strong> (n = 1, 2, 3…). No
+                irradian en su nivel. Al saltar entre niveles emiten o absorben
+                un fotón de energía exacta: <strong>ΔE = hf</strong>.
+              </p>
+              <div class="anchor-box" style="margin: 12px 0">
+                <div class="anchor-icon">⚓</div>
+                <div>
+                  <div class="anchor-label">Imagen mental</div>
+                  <p>
+                    Pistas de atletismo numeradas. El electrón solo corre en la
+                    pista 1, 2 o 3. Para cambiar pista paga (absorbe) o cobra
+                    (emite) energía exacta.
+                  </p>
+                </div>
+              </div>
+              <div class="verdict-row">
+                <div class="verdict verdict-ok">
+                  <div class="verdict-label">✅ Lo que explicó</div>
+                  El espectro de líneas del hidrógeno (series de Lyman, Balmer,
+                  Paschen). La estabilidad del átomo.
+                </div>
+                <div class="verdict verdict-fail">
+                  <div class="verdict-label">✗ Fallo fatal</div>
+                  Solo funciona para hidrógeno. Con más electrones falla. Las
+                  órbitas exactas violan el principio de incertidumbre de
+                  Heisenberg.
+                </div>
+              </div>
+              <div class="recall-box" style="margin-top: 16px">
+                <div class="recall-label">🧠 Reto de recuerdo</div>
+                <div class="recall-question">
+                  ¿Qué serie espectral corresponde a saltos que terminan en n=2?
+                </div>
+                <button class="recall-toggle" onclick="toggleRecall(this)">
+                  Ver respuesta
+                </button>
+                <div class="recall-answer">
+                  Serie de Balmer. Produce líneas en el espectro visible. Saltos
+                  n=3→2 (rojo, 656 nm), n=4→2 (verde-azul, 486 nm). Los saltos
+                  hacia n=1 son la serie de Lyman (ultravioleta).
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- M4: CUÁNTICO -->
+        <div class="model-card" id="model-4">
+          <div class="model-card-inner">
+            <div class="model-visual">
+              <svg width="140" height="140" viewBox="0 0 140 140">
+                <defs>
+                  <radialGradient id="cg4" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stop-color="#2563a8" stop-opacity=".6" />
+                    <stop
+                      offset="45%"
+                      stop-color="#2563a8"
+                      stop-opacity=".25"
+                    />
+                    <stop
+                      offset="100%"
+                      stop-color="#2563a8"
+                      stop-opacity=".04"
+                    />
+                  </radialGradient>
+                </defs>
+                <circle cx="70" cy="70" r="62" fill="url(#cg4)" />
+                <circle cx="70" cy="70" r="38" fill="url(#cg4)" opacity=".5" />
+                <circle cx="70" cy="70" r="12" fill="#c0392b" />
+                <text
+                  x="70"
+                  y="74"
+                  text-anchor="middle"
+                  font-family="DM Sans"
+                  font-size="9"
+                  fill="white"
+                >
+                  núcleo
+                </text>
+                <text
+                  x="70"
+                  y="126"
+                  text-anchor="middle"
+                  font-family="DM Sans"
+                  font-size="9"
+                  fill="#2563a8"
+                >
+                  nube de probabilidad
+                </text>
+              </svg>
+              <div class="model-visual-label">Orbital / Nube cuántica</div>
+            </div>
+            <div class="model-content">
+              <span class="model-year-badge"
+                >1926 · Schrödinger, Heisenberg, De Broglie</span
+              >
+              <h3>Modelo Cuántico (Vigente)</h3>
+              <p>
+                No hay órbita definida. El electrón existe como una
+                <strong>función de probabilidad</strong> — los orbitales. La
+                densidad de la nube indica la probabilidad de hallarlo. Donde
+                más denso → más probable.
+              </p>
+              <div class="anchor-box" style="margin: 12px 0">
+                <div class="anchor-icon">⚓</div>
+                <div>
+                  <div class="anchor-label">Imagen mental — nube vs carril</div>
+                  <p>
+                    Bohr: el electrón corre en una pista exacta. Schrödinger: el
+                    electrón es una <strong>nube de niebla</strong> con forma.
+                    Donde la niebla es más densa → más probabilidad. Sin pista.
+                    Sin trayectoria.
+                  </p>
+                </div>
+              </div>
+              <div class="verdict-row">
+                <div class="verdict verdict-ok">
+                  <div class="verdict-label">✅ Lo que explica</div>
+                  Todo: espectros complejos, configuraciones electrónicas,
+                  enlace químico, reactividad. Es el modelo de toda la química
+                  moderna.
+                </div>
+                <div class="verdict verdict-fail">
+                  <div class="verdict-label">⚠️ Límite filosófico</div>
+                  El electrón no "está" en ningún lugar específico hasta
+                  medirlo. La realidad cuántica desafía la intuición clásica.
+                </div>
+              </div>
+              <div class="recall-box" style="margin-top: 16px">
+                <div class="recall-label">🧠 Reto de recuerdo</div>
+                <div class="recall-question">
+                  ¿Qué significa que un orbital contiene ~90% de la
+                  probabilidad?
+                </div>
+                <button class="recall-toggle" onclick="toggleRecall(this)">
+                  Ver respuesta
+                </button>
+                <div class="recall-answer">
+                  Si midieras al electrón muchas veces, el 90% de esas
+                  mediciones lo encontrarías dentro de esa región. El 10%
+                  restante podría estar fuera. Por eso el orbital no tiene un
+                  borde definido: la probabilidad cae gradualmente, nunca es
+                  cero.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- REPASO MODELOS -->
+        <div class="section-review" style="margin-top: 36px">
+          <h3>🔁 Repaso — cadena de modelos</h3>
+          <p style="font-size: 13px; color: var(--muted); margin-bottom: 0">
+            Completa de memoria. Si no puedes, vuelve al modelo correspondiente.
+          </p>
+          <div class="review-grid">
+            <div class="review-item" onclick="this.classList.toggle('checked')">
+              <span class="review-check"></span
+              ><span>Dalton: el átomo es una ___ maciza</span>
+            </div>
+            <div class="review-item" onclick="this.classList.toggle('checked')">
+              <span class="review-check"></span
+              ><span>Thomson: electrones incrustados en ___</span>
+            </div>
+            <div class="review-item" onclick="this.classList.toggle('checked')">
+              <span class="review-check"></span
+              ><span>Rutherford: el átomo es 99.99% ___</span>
+            </div>
+            <div class="review-item" onclick="this.classList.toggle('checked')">
+              <span class="review-check"></span
+              ><span>Bohr: electrones en ___ con energías discretas</span>
+            </div>
+            <div class="review-item" onclick="this.classList.toggle('checked')">
+              <span class="review-check"></span
+              ><span>Modelo cuántico: electrón como ___ de probabilidad</span>
+            </div>
+            <div class="review-item" onclick="this.classList.toggle('checked')">
+              <span class="review-check"></span
+              ><span>¿Qué experimento derriba a Thomson?</span>
+            </div>
+            <div class="review-item" onclick="this.classList.toggle('checked')">
+              <span class="review-check"></span
+              ><span>¿Qué falla en el modelo de Rutherford?</span>
+            </div>
+            <div class="review-item" onclick="this.classList.toggle('checked')">
+              <span class="review-check"></span
+              ><span>¿Qué modelo se usa en química hoy?</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <script>
+      // TABS
+      function showTab(id, btn) {
+        document
+          .querySelectorAll("section")
+          .forEach((s) => s.classList.remove("active"));
+        document
+          .querySelectorAll(".nav-btn")
+          .forEach((b) => b.classList.remove("active"));
+        document.getElementById("tab-" + id).classList.add("active");
+        if (btn) btn.classList.add("active");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      // CARDS
+      function toggleCard(h) {
+        const b = h.nextElementSibling,
+          t = h.querySelector(".sc-toggle"),
+          o = b.classList.contains("open");
+        b.classList.toggle("open", !o);
+        t.classList.toggle("open", !o);
+      }
+
+      // RECALL
+      function toggleRecall(btn) {
+        const a = btn.nextElementSibling,
+          s = a.classList.toggle("show");
+        btn.textContent = s ? "Ocultar respuesta" : "Ver respuesta";
+      }
+
+      // MARK
+      const read = new Set();
+      const TOTAL = 9;
+      function markRead(btn, key) {
+        if (read.has(key)) return;
+        read.add(key);
+        btn.classList.add("marked");
+        btn.textContent = "✓ Leído";
+        const pct = Math.round((read.size / TOTAL) * 100);
+        document.getElementById("prog-fill").style.width = pct + "%";
+        document.getElementById("prog-pct").textContent = pct + "%";
+      }
+
+      // MODELS
+      function showModel(idx, el) {
+        document
+          .querySelectorAll(".model-card")
+          .forEach((c, i) => c.classList.toggle("active", i === idx));
+        document
+          .querySelectorAll(".mt-step")
+          .forEach((s, i) => s.classList.toggle("active", i === idx));
+      }
+    </script>
+  </body>
+</html>
