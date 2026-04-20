@@ -729,6 +729,607 @@
         background: var(--bg2);
       }
 
+      /* ── FLASHCARDS ────────────────────────────── */
+      /* Category color tokens */
+      :root {
+        --cat-all: #1a1a2e;
+        --cat-historia: #7c3f12;
+        --cat-modelos: #0e4f6b;
+        --cat-cuantica: #3d1870;
+        --cat-particulas: #0e5c3a;
+      }
+
+      /* Outer wrapper — full-bleed dark stage */
+      .fc-stage {
+        background: linear-gradient(
+          160deg,
+          #0f0f1a 0%,
+          #1a1230 50%,
+          #0a1520 100%
+        );
+        border-radius: 24px;
+        padding: 36px 32px 40px;
+        margin: -8px 0 0;
+        position: relative;
+        overflow: hidden;
+      }
+      .fc-stage::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(
+            ellipse 60% 40% at 80% 20%,
+            rgba(212, 160, 23, 0.06) 0%,
+            transparent 70%
+          ),
+          radial-gradient(
+            ellipse 40% 60% at 10% 80%,
+            rgba(37, 99, 168, 0.07) 0%,
+            transparent 70%
+          );
+        pointer-events: none;
+      }
+
+      /* Header row */
+      .fc-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 28px;
+        position: relative;
+        z-index: 1;
+      }
+      .fc-title {
+        font-family: "Fraunces", serif;
+        font-size: 13px;
+        letter-spacing: 0.06em;
+        color: rgba(255, 255, 255, 0.35);
+        text-transform: uppercase;
+      }
+      .fc-shortcuts {
+        font-size: 11px;
+        color: rgba(255, 255, 255, 0.2);
+        display: flex;
+        gap: 12px;
+      }
+      .fc-key {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(255, 255, 255, 0.07);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 5px;
+        padding: 2px 7px;
+        font-family: monospace;
+        font-size: 10px;
+        color: rgba(255, 255, 255, 0.4);
+      }
+
+      /* Category pill filters */
+      .fc-filters {
+        display: flex;
+        gap: 7px;
+        margin-bottom: 28px;
+        flex-wrap: wrap;
+        position: relative;
+        z-index: 1;
+      }
+      .fc-filter-btn {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 20px;
+        padding: 5px 14px;
+        font-size: 11px;
+        font-weight: 500;
+        font-family: "DM Sans", sans-serif;
+        color: rgba(255, 255, 255, 0.45);
+        cursor: pointer;
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .fc-filter-btn::before {
+        content: "";
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: currentColor;
+        opacity: 0.5;
+        flex-shrink: 0;
+      }
+      .fc-filter-btn:hover {
+        background: rgba(255, 255, 255, 0.1);
+        color: rgba(255, 255, 255, 0.7);
+      }
+      .fc-filter-btn.active {
+        background: rgba(255, 255, 255, 0.12);
+        border-color: rgba(255, 255, 255, 0.25);
+        color: #fff;
+      }
+      .fc-filter-btn[data-cat="all"]::before {
+        background: #aaa;
+      }
+      .fc-filter-btn[data-cat="historia"]::before {
+        background: #e07840;
+      }
+      .fc-filter-btn[data-cat="modelos"]::before {
+        background: #38bdf8;
+      }
+      .fc-filter-btn[data-cat="cuantica"]::before {
+        background: #c084fc;
+      }
+      .fc-filter-btn[data-cat="particulas"]::before {
+        background: #4ade80;
+      }
+
+      /* Progress strip */
+      .fc-progress-row {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 28px;
+        position: relative;
+        z-index: 1;
+      }
+      .fc-prog-track {
+        flex: 1;
+        height: 3px;
+        background: rgba(255, 255, 255, 0.08);
+        border-radius: 2px;
+        overflow: hidden;
+      }
+      .fc-prog-fill {
+        height: 100%;
+        background: linear-gradient(90deg, var(--gold), #f5c842);
+        border-radius: 2px;
+        transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        width: 0%;
+      }
+      .fc-prog-meta {
+        display: flex;
+        gap: 14px;
+        align-items: center;
+        flex-shrink: 0;
+      }
+      .fc-prog-label {
+        font-size: 11px;
+        color: rgba(255, 255, 255, 0.35);
+        font-weight: 500;
+        white-space: nowrap;
+      }
+      .fc-easy-pill {
+        font-size: 10px;
+        font-weight: 600;
+        background: rgba(74, 222, 128, 0.12);
+        color: #4ade80;
+        border-radius: 10px;
+        padding: 2px 8px;
+        display: none;
+      }
+      .fc-hard-pill {
+        font-size: 10px;
+        font-weight: 600;
+        background: rgba(248, 113, 113, 0.12);
+        color: #f87171;
+        border-radius: 10px;
+        padding: 2px 8px;
+        display: none;
+      }
+
+      /* 3‑D CARD */
+      .fc-scene-wrap {
+        position: relative;
+        z-index: 1;
+        margin-bottom: 20px;
+      }
+      /* ghost layers — give depth illusion */
+      .fc-ghost {
+        position: absolute;
+        border-radius: 22px;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.07);
+      }
+      .fc-ghost-1 {
+        inset: 6px -4px -12px;
+        transform: rotate(-1.5deg);
+      }
+      .fc-ghost-2 {
+        inset: 3px -2px -6px;
+        transform: rotate(-0.6deg);
+      }
+
+      .flashcard-scene {
+        perspective: 1400px;
+        cursor: pointer;
+        position: relative;
+        z-index: 2;
+        border-radius: 22px;
+        user-select: none;
+      }
+      .flashcard-scene:hover .flashcard-inner {
+        transform: translateY(-3px) rotateY(0deg);
+      }
+      .flashcard-scene.flipped:hover .flashcard-inner {
+        transform: translateY(-3px) rotateY(180deg);
+      }
+      .flashcard-inner {
+        position: relative;
+        width: 100%;
+        min-height: 260px;
+        transform-style: preserve-3d;
+        transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+        border-radius: 22px;
+      }
+      .flashcard-scene.flipped .flashcard-inner {
+        transform: rotateY(180deg);
+      }
+      .fc-face {
+        position: absolute;
+        width: 100%;
+        min-height: 260px;
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
+        border-radius: 22px;
+        display: flex;
+        flex-direction: column;
+        padding: 36px 40px;
+      }
+      /* FRONT */
+      .fc-front {
+        background: var(--card);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        box-shadow:
+          0 20px 60px rgba(0, 0, 0, 0.35),
+          0 4px 16px rgba(0, 0, 0, 0.2);
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+      }
+      /* colored accent bar at top of front */
+      .fc-front::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        border-radius: 22px 22px 0 0;
+        background: var(--fc-accent, var(--gold));
+        transition: background 0.3s;
+      }
+      /* BACK */
+      .fc-back {
+        background: linear-gradient(145deg, #1e1b30 0%, #151228 100%);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+        transform: rotateY(180deg);
+        justify-content: flex-start;
+      }
+      .fc-back::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        border-radius: 22px 22px 0 0;
+        background: var(--fc-accent, var(--gold));
+        opacity: 0.7;
+      }
+
+      /* Front content */
+      .fc-cat-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 10px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        padding: 4px 12px;
+        border-radius: 20px;
+        background: rgba(0, 0, 0, 0.05);
+        color: var(--muted);
+        margin-bottom: 20px;
+      }
+      .fc-cat-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--fc-accent, var(--gold));
+        flex-shrink: 0;
+      }
+      .fc-question {
+        font-family: "Fraunces", serif;
+        font-size: clamp(18px, 2.5vw, 22px);
+        font-weight: 600;
+        color: var(--ink);
+        line-height: 1.35;
+        margin-bottom: 24px;
+        max-width: 480px;
+      }
+      .fc-flip-cue {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        font-size: 11px;
+        color: var(--muted);
+        padding: 7px 14px;
+        border-radius: 20px;
+        background: var(--bg2);
+        margin-top: auto;
+        position: absolute;
+        bottom: 28px;
+      }
+      .fc-flip-cue svg {
+        opacity: 0.5;
+      }
+
+      /* Back content */
+      .fc-back-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 20px;
+      }
+      .fc-back-badge {
+        font-size: 10px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: var(--gold);
+        opacity: 0.7;
+      }
+      .fc-back-num {
+        font-size: 11px;
+        color: rgba(255, 255, 255, 0.25);
+      }
+      .fc-answer {
+        font-size: 14.5px;
+        color: rgba(240, 238, 234, 0.9);
+        line-height: 1.75;
+        flex: 1;
+      }
+
+      /* Rate buttons */
+      .fc-rate-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin-bottom: 18px;
+        position: relative;
+        z-index: 1;
+      }
+      .fc-rate-btn {
+        padding: 14px 10px;
+        border-radius: 16px;
+        border: 1.5px solid transparent;
+        font-family: "DM Sans", sans-serif;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.18s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        letter-spacing: 0.01em;
+      }
+      .fc-rate-btn.hard {
+        background: rgba(248, 113, 113, 0.08);
+        border-color: rgba(248, 113, 113, 0.2);
+        color: #f87171;
+      }
+      .fc-rate-btn.hard:hover:not(:disabled) {
+        background: rgba(248, 113, 113, 0.16);
+        border-color: rgba(248, 113, 113, 0.4);
+        transform: translateY(-1px);
+      }
+      .fc-rate-btn.easy {
+        background: rgba(74, 222, 128, 0.08);
+        border-color: rgba(74, 222, 128, 0.2);
+        color: #4ade80;
+      }
+      .fc-rate-btn.easy:hover:not(:disabled) {
+        background: rgba(74, 222, 128, 0.15);
+        border-color: rgba(74, 222, 128, 0.4);
+        transform: translateY(-1px);
+      }
+      .fc-rate-btn:disabled {
+        opacity: 0.22;
+        cursor: default;
+        transform: none !important;
+      }
+      .fc-rate-icon {
+        font-size: 16px;
+      }
+
+      /* Nav row */
+      .fc-nav-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+        position: relative;
+        z-index: 1;
+      }
+      .fc-nav-btn {
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: rgba(255, 255, 255, 0.6);
+        border-radius: 12px;
+        padding: 9px 18px;
+        font-family: "DM Sans", sans-serif;
+        font-size: 13px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.15s;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .fc-nav-btn:hover {
+        background: rgba(255, 255, 255, 0.12);
+        color: #fff;
+      }
+      .fc-counter-wrap {
+        text-align: center;
+      }
+      .fc-counter {
+        font-family: "Fraunces", serif;
+        font-size: 22px;
+        font-weight: 600;
+        color: #fff;
+        display: block;
+        line-height: 1;
+      }
+      .fc-counter-sub {
+        font-size: 10px;
+        color: rgba(255, 255, 255, 0.3);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        margin-top: 2px;
+        display: block;
+      }
+
+      /* Summary screen */
+      .fc-summary {
+        background: linear-gradient(145deg, #1e1b30, #151228);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 22px;
+        padding: 44px 36px;
+        text-align: center;
+        display: none;
+        position: relative;
+        z-index: 1;
+      }
+      .fc-summary-emoji {
+        font-size: 44px;
+        margin-bottom: 14px;
+        display: block;
+      }
+      .fc-summary h3 {
+        font-family: "Fraunces", serif;
+        font-size: 26px;
+        font-weight: 700;
+        color: #fff;
+        margin-bottom: 6px;
+      }
+      .fc-summary .fc-summary-sub {
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.4);
+        margin-bottom: 32px;
+      }
+      .fc-donut-wrap {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 32px;
+        position: relative;
+      }
+      .fc-donut-wrap svg {
+        filter: drop-shadow(0 0 12px rgba(74, 222, 128, 0.15));
+      }
+      .fc-donut-label {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+      }
+      .fc-donut-pct {
+        font-family: "Fraunces", serif;
+        font-size: 28px;
+        font-weight: 700;
+        color: #fff;
+        display: block;
+        line-height: 1;
+      }
+      .fc-donut-word {
+        font-size: 10px;
+        color: rgba(255, 255, 255, 0.35);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+      .fc-summary-stats {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        margin-bottom: 28px;
+        max-width: 280px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .fc-stat {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 14px;
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+      }
+      .fc-stat strong {
+        font-family: "Fraunces", serif;
+        font-size: 28px;
+        font-weight: 700;
+      }
+      .fc-stat span {
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: rgba(255, 255, 255, 0.3);
+      }
+      .fc-stat.good strong {
+        color: #4ade80;
+      }
+      .fc-stat.bad strong {
+        color: #f87171;
+      }
+      .fc-summary-msg {
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.5);
+        margin-bottom: 28px;
+        line-height: 1.6;
+      }
+      .fc-summary-actions {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+      .fc-sum-btn {
+        padding: 11px 22px;
+        border-radius: 12px;
+        font-family: "DM Sans", sans-serif;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.15s;
+        border: none;
+      }
+      .fc-sum-btn.primary {
+        background: rgba(255, 255, 255, 0.12);
+        color: #fff;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+      }
+      .fc-sum-btn.primary:hover {
+        background: rgba(255, 255, 255, 0.2);
+      }
+      .fc-sum-btn.secondary {
+        background: rgba(248, 113, 113, 0.1);
+        color: #f87171;
+        border: 1px solid rgba(248, 113, 113, 0.2);
+      }
+      .fc-sum-btn.secondary:hover {
+        background: rgba(248, 113, 113, 0.18);
+      }
+      .fc-sum-btn.secondary:disabled {
+        opacity: 0.3;
+        cursor: default;
+      }
+
       @media (max-width: 640px) {
         .hero {
           padding: 44px 20px 36px;
@@ -797,6 +1398,9 @@
         </button>
         <button class="nav-btn" onclick="showTab('modelos', this)">
           Modelos del Átomo
+        </button>
+        <button class="nav-btn" onclick="showTab('flashcards', this)">
+          Flashcards
         </button>
       </div>
     </div>
@@ -2272,6 +2876,237 @@
           </div>
         </div>
       </section>
+
+      <!-- ══════════════════════════════════════════
+     FLASHCARDS
+═══════════════════════════════════════════ -->
+      <section id="tab-flashcards">
+        <h2>Flashcards</h2>
+        <p class="section-intro">
+          Voltea cada tarjeta, luego marca si fue fácil o difícil. Al terminar
+          la ronda podés repetir solo las difíciles.
+        </p>
+
+        <div class="fc-stage">
+          <!-- header row -->
+          <div class="fc-header">
+            <span class="fc-title">Modo estudio</span>
+            <div class="fc-shortcuts">
+              <span><span class="fc-key">Espacio</span> voltear</span>
+              <span
+                ><span class="fc-key">←</span
+                ><span class="fc-key">→</span> navegar</span
+              >
+            </div>
+          </div>
+
+          <!-- category filters -->
+          <div class="fc-filters">
+            <button
+              class="fc-filter-btn active"
+              data-cat="all"
+              onclick="fcSetFilter('all', this)"
+            >
+              Todas
+            </button>
+            <button
+              class="fc-filter-btn"
+              data-cat="historia"
+              onclick="fcSetFilter('historia', this)"
+            >
+              Historia
+            </button>
+            <button
+              class="fc-filter-btn"
+              data-cat="modelos"
+              onclick="fcSetFilter('modelos', this)"
+            >
+              Modelos
+            </button>
+            <button
+              class="fc-filter-btn"
+              data-cat="cuantica"
+              onclick="fcSetFilter('cuantica', this)"
+            >
+              Física cuántica
+            </button>
+            <button
+              class="fc-filter-btn"
+              data-cat="particulas"
+              onclick="fcSetFilter('particulas', this)"
+            >
+              Partículas
+            </button>
+          </div>
+
+          <!-- progress bar -->
+          <div class="fc-progress-row">
+            <div class="fc-prog-track">
+              <div class="fc-prog-fill" id="fc-prog-fill"></div>
+            </div>
+            <div class="fc-prog-meta">
+              <span class="fc-prog-label" id="fc-prog-label">0 / 0</span>
+              <span class="fc-easy-pill" id="fc-easy-pill">0 fácil</span>
+              <span class="fc-hard-pill" id="fc-hard-pill">0 difícil</span>
+            </div>
+          </div>
+
+          <!-- card with ghost shadow layers -->
+          <div class="fc-scene-wrap">
+            <div class="fc-ghost fc-ghost-1"></div>
+            <div class="fc-ghost fc-ghost-2"></div>
+            <div class="flashcard-scene" id="fc-scene" onclick="fcFlip()">
+              <div class="flashcard-inner" id="fc-inner">
+                <!-- FRONT -->
+                <div class="fc-face fc-front">
+                  <div class="fc-cat-badge">
+                    <span class="fc-cat-dot"></span>
+                    <span id="fc-cat-front">—</span>
+                  </div>
+                  <div class="fc-question" id="fc-q">Cargando...</div>
+                  <div class="fc-flip-cue">
+                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                      <path
+                        d="M2 6h8M6 2l4 4-4 4"
+                        stroke="currentColor"
+                        stroke-width="1.4"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                    Toca para ver la respuesta
+                  </div>
+                </div>
+
+                <!-- BACK -->
+                <div class="fc-face fc-back">
+                  <div class="fc-back-header">
+                    <span class="fc-back-badge" id="fc-cat-back"
+                      >Respuesta</span
+                    >
+                    <span class="fc-back-num" id="fc-back-num">1 / —</span>
+                  </div>
+                  <div class="fc-answer" id="fc-a"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- rate buttons -->
+          <div class="fc-rate-row">
+            <button
+              class="fc-rate-btn hard"
+              id="fc-btn-hard"
+              onclick="fcRate('hard')"
+              disabled
+            >
+              <span class="fc-rate-icon">😅</span> No lo sabía
+            </button>
+            <button
+              class="fc-rate-btn easy"
+              id="fc-btn-easy"
+              onclick="fcRate('easy')"
+              disabled
+            >
+              <span class="fc-rate-icon">✓</span> Lo sabía
+            </button>
+          </div>
+
+          <!-- nav -->
+          <div class="fc-nav-row">
+            <button class="fc-nav-btn" onclick="fcPrev()">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <path
+                  d="M9 11L5 7l4-4"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+              Anterior
+            </button>
+            <div class="fc-counter-wrap">
+              <span class="fc-counter" id="fc-counter">1</span>
+              <span class="fc-counter-sub" id="fc-counter-sub">de —</span>
+            </div>
+            <button class="fc-nav-btn" onclick="fcNext()">
+              Siguiente
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <path
+                  d="M5 11l4-4-4-4"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+          </div>
+
+          <!-- summary screen -->
+          <div class="fc-summary" id="fc-summary">
+            <span class="fc-summary-emoji" id="fc-sum-emoji">🎉</span>
+            <h3>¡Ronda completa!</h3>
+            <p class="fc-summary-sub">Así te fue en esta vuelta</p>
+            <div class="fc-donut-wrap">
+              <svg width="120" height="120" viewBox="0 0 120 120">
+                <circle
+                  cx="60"
+                  cy="60"
+                  r="48"
+                  fill="none"
+                  stroke="rgba(255,255,255,.06)"
+                  stroke-width="12"
+                />
+                <circle
+                  id="fc-donut-arc"
+                  cx="60"
+                  cy="60"
+                  r="48"
+                  fill="none"
+                  stroke="#4ade80"
+                  stroke-width="12"
+                  stroke-linecap="round"
+                  stroke-dasharray="301.6"
+                  stroke-dashoffset="301.6"
+                  transform="rotate(-90 60 60)"
+                  style="
+                    transition: stroke-dashoffset 0.8s
+                      cubic-bezier(0.4, 0, 0.2, 1);
+                  "
+                />
+              </svg>
+              <div class="fc-donut-label">
+                <span class="fc-donut-pct" id="fc-donut-pct">0%</span>
+                <span class="fc-donut-word">fácil</span>
+              </div>
+            </div>
+            <div class="fc-summary-stats">
+              <div class="fc-stat good">
+                <strong id="fc-s-easy">0</strong><span>Fácil</span>
+              </div>
+              <div class="fc-stat bad">
+                <strong id="fc-s-hard">0</strong><span>Difícil</span>
+              </div>
+            </div>
+            <p class="fc-summary-msg" id="fc-summary-msg"></p>
+            <div class="fc-summary-actions">
+              <button class="fc-sum-btn primary" onclick="fcRestart(false)">
+                Repetir todas
+              </button>
+              <button
+                class="fc-sum-btn secondary"
+                id="fc-only-hard-btn"
+                onclick="fcRestart(true)"
+              >
+                Solo las difíciles
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- /fc-stage -->
+      </section>
     </div>
 
     <script>
@@ -2317,7 +3152,410 @@
         document.getElementById("prog-pct").textContent = pct + "%";
       }
 
-      // MODELS
+      // FLASHCARDS
+      const catAccent = {
+        historia: "#e07840",
+        modelos: "#38bdf8",
+        cuantica: "#c084fc",
+        particulas: "#4ade80",
+        all: "#d4a017",
+      };
+      const catNames = {
+        historia: "Historia",
+        modelos: "Modelos",
+        cuantica: "Física cuántica",
+        particulas: "Partículas",
+        all: "General",
+      };
+
+      const allCards = [
+        {
+          cat: "historia",
+          q: '¿Qué significa la palabra "átomo" en griego y quién la acuñó?',
+          a: 'Del griego a-tomos = "sin corte / sin división". La acuñó Demócrito (~460 a.C.), influido por su maestro Leucipo. Era filosofía pura, no ciencia experimental.',
+        },
+        {
+          cat: "historia",
+          q: "¿Por qué la idea de Demócrito tardó 2000 años en convertirse en ciencia?",
+          a: "Aristóteles la rechazó de plano. Su enorme autoridad intelectual bloqueó el desarrollo de la teoría atómica hasta que Dalton la respaldó con evidencia experimental en 1803.",
+        },
+        {
+          cat: "historia",
+          q: "¿Cuáles dos postulados de Dalton siguen siendo válidos hoy?",
+          a: "1) Átomos de distintos elementos tienen masas distintas. 2) En una reacción química los átomos se reorganizan pero no se crean ni se destruyen. Este último es la base de la estequiometría.",
+        },
+        {
+          cat: "historia",
+          q: "¿Qué le hizo Thomson al tubo de rayos catódicos para descubrir el electrón?",
+          a: "Aplicó campos eléctrico y magnético al haz. Midió la desviación y calculó e/m = 1.76×10¹¹ C/kg — idéntica sin importar el material del cátodo → los electrones son universales.",
+        },
+        {
+          cat: "historia",
+          q: "¿Por qué el resultado del experimento de Thomson era el mismo con cualquier material?",
+          a: "Porque los electrones son partículas fundamentales presentes en toda la materia. Eso fue lo verdaderamente revolucionario: no son propiedad de un solo elemento.",
+        },
+        {
+          cat: "historia",
+          q: "¿Qué esperaba Rutherford encontrar con la lámina de oro y qué encontró realmente?",
+          a: "Esperaba que todas las partículas α pasaran casi sin desviarse. Encontró que 1 de cada 8000 rebotó casi de vuelta → existe un núcleo pequeño, denso y positivo.",
+        },
+        {
+          cat: "historia",
+          q: "¿Cuál fue el problema fatal del modelo de Rutherford?",
+          a: "Un electrón en órbita circular irradia energía → debería espiralar y colapsar en ~10⁻⁸ s. No explicaba la estabilidad del átomo.",
+        },
+        {
+          cat: "historia",
+          q: "¿Qué relación tenía Rutherford con Thomson?",
+          a: "Rutherford fue alumno de Thomson. Diseñó el experimento de la lámina de oro para confirmar el modelo de su maestro — y terminó refutándolo por completo.",
+        },
+        {
+          cat: "historia",
+          q: "¿Qué problema de Rutherford resolvió Bohr y cómo?",
+          a: "El colapso orbital. Bohr postuló que los electrones solo existen en órbitas estacionarias con energías discretas, y que en ellas NO irradian energía.",
+        },
+        {
+          cat: "historia",
+          q: "¿Qué evidencia experimental convenció al mundo del modelo de Bohr?",
+          a: "La predicción exacta del espectro de líneas del hidrógeno. Cada salto entre niveles emite un fotón de color específico (ΔE = hf). Las líneas medidas coincidieron exactamente.",
+        },
+        {
+          cat: "historia",
+          q: "¿Quiénes confirmaron experimentalmente la hipótesis de De Broglie?",
+          a: "Davisson y Germer (1927). Dispararon electrones contra un cristal de níquel y observaron difracción — comportamiento ondulatorio puro — coincidente con λ = h/(mv).",
+        },
+        {
+          cat: "historia",
+          q: "¿Qué problema numérico resolvió el neutrón de Chadwick en el helio-4?",
+          a: "El helio-4 tiene Z=2 (≈2u) pero su masa real es ≈4u. Los 2 neutrones aportan las 2u restantes: 2p + 2n = 4u. Sin neutrones la masa del núcleo no cuadraba.",
+        },
+        {
+          cat: "historia",
+          q: "¿Cómo detectó Chadwick el neutrón si no tiene carga?",
+          a: "Observó una radiación penetrante que no se desviaba con campos eléctricos ni magnéticos. Midió su masa haciéndola colisionar con núcleos de hidrógeno y nitrógeno por transferencia de momento.",
+        },
+        {
+          cat: "modelos",
+          q: "¿Cuáles son los 5 modelos atómicos en orden cronológico?",
+          a: "1) Dalton — esfera maciza (1803). 2) Thomson — budín de pasas (1904). 3) Rutherford — nuclear (1911). 4) Bohr — planetario cuantizado (1913). 5) Cuántico / Schrödinger — nube de probabilidad (1926).",
+        },
+        {
+          cat: "modelos",
+          q: "¿Qué experimento derriba el modelo de Dalton?",
+          a: "El tubo de rayos catódicos de Thomson (1897): demostró que el átomo contiene partes más pequeñas con carga negativa. El átomo NO es macizo ni indivisible.",
+        },
+        {
+          cat: "modelos",
+          q: "¿Qué experimento derriba el modelo de Thomson?",
+          a: "El experimento de la lámina de oro de Rutherford (1911): la carga positiva NO está distribuida difusamente — está concentrada en un núcleo muy pequeño y denso.",
+        },
+        {
+          cat: "modelos",
+          q: "¿Cuál es la diferencia visual entre el modelo de Thomson y el de Rutherford?",
+          a: "Thomson: esfera positiva difusa con electrones incrustados (muffin). Rutherford: núcleo minúsculo y denso en el centro, electrones orbitando lejos en el espacio vacío (sistema solar).",
+        },
+        {
+          cat: "modelos",
+          q: "¿Cuál es la diferencia entre órbita (Bohr) y orbital (Schrödinger)?",
+          a: "Órbita: trayectoria circular fija y definida. Orbital: región del espacio con ~90% de probabilidad de encontrar al electrón. No hay trayectoria — solo densidad de probabilidad.",
+        },
+        {
+          cat: "modelos",
+          q: "¿Por qué el modelo de Bohr falla con átomos multielectrónicos?",
+          a: "Ignora las repulsiones electrón-electrón. Con más de un electrón, esas repulsiones modifican los niveles y la cuantización simple de Bohr ya no predice bien los espectros.",
+        },
+        {
+          cat: "modelos",
+          q: "¿Qué modelo se usa en la química moderna?",
+          a: "El modelo cuántico de Schrödinger (orbitales). Explica configuraciones electrónicas, enlace químico, reactividad y propiedades periódicas — todo lo que la química moderna necesita.",
+        },
+        {
+          cat: "cuantica",
+          q: "¿Qué afirma la hipótesis de De Broglie?",
+          a: "Toda partícula en movimiento tiene una longitud de onda: λ = h/(mv). Para objetos grandes es imperceptible. Para electrones es del tamaño del átomo — real y medible.",
+        },
+        {
+          cat: "cuantica",
+          q: "¿Qué representa |ψ|² en la ecuación de Schrödinger?",
+          a: 'La densidad de probabilidad: |ψ|² en un punto = probabilidad de encontrar al electrón ahí. Donde la "nube" es más densa → más probable hallarlo. El orbital delimita el 90% de esa probabilidad.',
+        },
+        {
+          cat: "cuantica",
+          q: "Enuncia el Principio de Incertidumbre de Heisenberg.",
+          a: "Δx · Δp ≥ ℏ/2. No se pueden conocer simultáneamente con exactitud la posición y el momento de una partícula. No es límite tecnológico — es una propiedad fundamental de la realidad.",
+        },
+        {
+          cat: "cuantica",
+          q: "¿Por qué Heisenberg hace que los orbitales reemplacen a las órbitas?",
+          a: "Una órbita requiere posición y velocidad exactas simultáneamente. Heisenberg demuestra que eso es imposible. Sin trayectoria → solo probabilidades → los orbitales de Schrödinger.",
+        },
+        {
+          cat: "cuantica",
+          q: "¿Qué es la dualidad onda-partícula?",
+          a: "Los objetos cuánticos se comportan como ondas (difracción) y como partículas (efecto fotoeléctrico). La naturaleza cuántica es fundamentalmente dual — no es ni uno ni otro exclusivamente.",
+        },
+        {
+          cat: "cuantica",
+          q: "¿Qué son los cuatro números cuánticos n, l, mₗ, mₛ?",
+          a: "n = nivel de energía. l = forma del orbital (0 a n-1). mₗ = orientación (-l a +l). mₛ = espín (+½ o -½). Los 4 describen completamente el estado de un electrón.",
+        },
+        {
+          cat: "cuantica",
+          q: "¿Qué dice el Principio de Exclusión de Pauli?",
+          a: "Ningún electrón puede tener los cuatro números cuánticos idénticos. Cada orbital alberga máximo 2 electrones con espines opuestos (↑↓).",
+        },
+        {
+          cat: "cuantica",
+          q: "¿Qué dice la Regla de Hund?",
+          a: "En orbitales degenerados, los electrones se distribuyen con espines paralelos (uno por orbital) antes de emparejarse. Maximiza el espín total del átomo.",
+        },
+        {
+          cat: "cuantica",
+          q: "¿Qué es la cuantización de energía de Bohr?",
+          a: "Eₙ = -13.6 eV / n². Solo toma valores discretos. El electrón no puede tener cualquier energía — solo la de los niveles n = 1, 2, 3... Eso explica los colores exactos del espectro.",
+        },
+        {
+          cat: "cuantica",
+          q: "¿Cuántos electrones caben en los subniveles s, p, d, f?",
+          a: "s: 2 · p: 6 · d: 10 · f: 14. Fórmula: 2(2l+1) por subnivel. Cada orbital alberga 2 electrones (Pauli).",
+        },
+        {
+          cat: "particulas",
+          q: "¿Qué son las partículas alfa usadas por Rutherford?",
+          a: "Núcleos de helio-4: 2 protones + 2 neutrones, carga +2. Se producen en la desintegración radiactiva. Rutherford las usó como proyectiles por su alta energía y carga conocida.",
+        },
+        {
+          cat: "particulas",
+          q: "¿Qué son los isótopos?",
+          a: "Átomos del mismo elemento (mismo Z) con diferente número de neutrones N y por tanto diferente A. Ejemplo: ¹²C (6p+6n) y ¹⁴C (6p+8n). Propiedades químicas casi idénticas.",
+        },
+        {
+          cat: "particulas",
+          q: "¿Cuál es la fórmula de energía del fotón emitido en un salto?",
+          a: "ΔE = hf = hc/λ. h = 6.626×10⁻³⁴ J·s. La energía del fotón = diferencia exacta entre los dos niveles del salto electrónico.",
+        },
+        {
+          cat: "particulas",
+          q: "¿Cuál es la diferencia entre espectro de emisión y de absorción?",
+          a: "Emisión: electrón cae → emite fotón → líneas de color sobre negro. Absorción: electrón absorbe fotón y sube → líneas oscuras sobre espectro continuo. Las posiciones son idénticas.",
+        },
+        {
+          cat: "particulas",
+          q: "¿Qué serie espectral corresponde a saltos hacia n=2?",
+          a: "Serie de Balmer — luz visible. Rojo (n=3→2, 656 nm), verde-azul (n=4→2, 486 nm). Saltos hacia n=1 = serie de Lyman (ultravioleta).",
+        },
+        {
+          cat: "particulas",
+          q: "¿Qué significa que el átomo es 99.99% vacío?",
+          a: "Núcleo ~10⁻¹⁵ m, átomo ~10⁻¹⁰ m. Si el núcleo fuera una pelota de fútbol, los electrones estarían a ~25 km. El átomo es casi todo espacio vacío.",
+        },
+      ];
+
+      let fcDeck = [],
+        fcIndex = 0,
+        fcFlipped = false;
+      let fcEasyCount = 0,
+        fcHardList = [],
+        fcFilter = "all";
+
+      const FC_CIRCUMFERENCE = 301.6; // 2π × 48
+
+      function fcSetFilter(f, btn) {
+        fcFilter = f;
+        document
+          .querySelectorAll(".fc-filter-btn")
+          .forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        fcBuildDeck();
+      }
+
+      function fcBuildDeck(onlyHard = false) {
+        const pool = allCards.filter(
+          (c) => fcFilter === "all" || c.cat === fcFilter,
+        );
+        fcDeck = onlyHard
+          ? pool.filter((c) => fcHardList.includes(c))
+          : [...pool];
+        fcIndex = 0;
+        fcEasyCount = 0;
+        fcHardList = [];
+        document.getElementById("fc-summary").style.display = "none";
+        document.getElementById("fc-scene").style.display = "";
+        document.querySelector(".fc-rate-row").style.display = "";
+        document.querySelector(".fc-nav-row").style.display = "";
+        fcRender();
+      }
+
+      function fcRender() {
+        if (!fcDeck.length) return;
+        const c = fcDeck[fcIndex];
+        const pool = allCards.filter(
+          (x) => fcFilter === "all" || x.cat === fcFilter,
+        );
+        const accent = catAccent[c.cat] || catAccent.all;
+
+        // card text
+        document.getElementById("fc-q").textContent = c.q;
+        document.getElementById("fc-a").textContent = c.a;
+        document.getElementById("fc-cat-front").textContent =
+          catNames[c.cat] || c.cat;
+        document.getElementById("fc-cat-back").textContent = (
+          catNames[c.cat] || c.cat
+        ).toUpperCase();
+        document.getElementById("fc-back-num").textContent =
+          fcIndex + 1 + " / " + fcDeck.length;
+
+        // counter
+        document.getElementById("fc-counter").textContent = fcIndex + 1;
+        document.getElementById("fc-counter-sub").textContent =
+          "de " + fcDeck.length;
+
+        // accent color
+        document
+          .querySelector(".fc-front")
+          .style.setProperty("--fc-accent", accent);
+        document
+          .querySelector(".fc-back")
+          .style.setProperty("--fc-accent", accent);
+        document.querySelector(".fc-cat-dot").style.background = accent;
+
+        // reset flip
+        fcFlipped = false;
+        document.getElementById("fc-scene").classList.remove("flipped");
+        document.getElementById("fc-btn-easy").disabled = true;
+        document.getElementById("fc-btn-hard").disabled = true;
+
+        // progress
+        const done = fcEasyCount + fcHardList.length;
+        const pct = pool.length ? Math.round((done / pool.length) * 100) : 0;
+        document.getElementById("fc-prog-fill").style.width = pct + "%";
+        document.getElementById("fc-prog-label").textContent =
+          done + " / " + pool.length;
+
+        // pills
+        const ep = document.getElementById("fc-easy-pill");
+        const hp = document.getElementById("fc-hard-pill");
+        ep.style.display = fcEasyCount > 0 ? "" : "none";
+        hp.style.display = fcHardList.length > 0 ? "" : "none";
+        ep.textContent = fcEasyCount + " fácil";
+        hp.textContent = fcHardList.length + " difícil";
+      }
+
+      function fcFlip() {
+        fcFlipped = !fcFlipped;
+        document
+          .getElementById("fc-scene")
+          .classList.toggle("flipped", fcFlipped);
+        if (fcFlipped) {
+          document.getElementById("fc-btn-easy").disabled = false;
+          document.getElementById("fc-btn-hard").disabled = false;
+        }
+      }
+
+      function fcRate(rating) {
+        const card = fcDeck[fcIndex];
+        if (rating === "easy") fcEasyCount++;
+        else if (!fcHardList.includes(card)) fcHardList.push(card);
+        if (fcIndex < fcDeck.length - 1) {
+          fcIndex++;
+          fcRender();
+        } else fcShowSummary();
+      }
+
+      function fcNext() {
+        if (fcIndex < fcDeck.length - 1) {
+          fcIndex++;
+          fcRender();
+        }
+      }
+      function fcPrev() {
+        if (fcIndex > 0) {
+          fcIndex--;
+          fcRender();
+        }
+      }
+
+      function fcShowSummary() {
+        document.getElementById("fc-scene").style.display = "none";
+        document.querySelector(".fc-rate-row").style.display = "none";
+        document.querySelector(".fc-nav-row").style.display = "none";
+        document.getElementById("fc-summary").style.display = "block";
+
+        const total = fcDeck.length;
+        const easy = fcEasyCount;
+        const hard = fcHardList.length;
+        const pct = total ? Math.round((easy / total) * 100) : 0;
+
+        document.getElementById("fc-s-easy").textContent = easy;
+        document.getElementById("fc-s-hard").textContent = hard;
+        document.getElementById("fc-donut-pct").textContent = pct + "%";
+
+        // donut arc animation
+        const offset = FC_CIRCUMFERENCE - (pct / 100) * FC_CIRCUMFERENCE;
+        const arc = document.getElementById("fc-donut-arc");
+        arc.style.strokeDashoffset = FC_CIRCUMFERENCE; // reset
+        setTimeout(() => {
+          arc.style.strokeDashoffset = offset;
+        }, 100);
+        arc.style.stroke =
+          pct >= 70 ? "#4ade80" : pct >= 40 ? "#fbbf24" : "#f87171";
+
+        document.getElementById("fc-sum-emoji").textContent =
+          pct === 100 ? "🏆" : pct >= 70 ? "🎉" : pct >= 40 ? "💪" : "📚";
+
+        const msg =
+          pct === 100
+            ? "¡Perfecto! Dominás todas las tarjetas de esta selección."
+            : pct >= 70
+              ? "Muy bien. Repasá las difíciles una vez más y las dominarás."
+              : pct >= 40
+                ? "Buen progreso. La repetición espaciada es la clave."
+                : "Sigue practicando. Cada vuelta refuerza la memoria.";
+        document.getElementById("fc-summary-msg").textContent = msg;
+
+        const hardBtn = document.getElementById("fc-only-hard-btn");
+        hardBtn.disabled = hard === 0;
+      }
+
+      function fcRestart(onlyHard) {
+        if (onlyHard && fcHardList.length === 0) return;
+        const pool = onlyHard
+          ? fcHardList
+          : allCards.filter((c) => fcFilter === "all" || c.cat === fcFilter);
+        fcDeck = [...pool];
+        fcIndex = 0;
+        fcEasyCount = 0;
+        fcHardList = [];
+        document.getElementById("fc-summary").style.display = "none";
+        document.getElementById("fc-scene").style.display = "";
+        document.querySelector(".fc-rate-row").style.display = "";
+        document.querySelector(".fc-nav-row").style.display = "";
+        fcRender();
+      }
+
+      // Keyboard shortcuts
+      document.addEventListener("keydown", (e) => {
+        if (
+          document.getElementById("tab-flashcards").style.display === "none" ||
+          !document
+            .getElementById("tab-flashcards")
+            .classList.contains("active")
+        )
+          return;
+        if (e.key === " " || e.key === "Enter") {
+          e.preventDefault();
+          fcFlip();
+        } else if (e.key === "ArrowRight") fcNext();
+        else if (e.key === "ArrowLeft") fcPrev();
+        else if (e.key === "e" || e.key === "E") {
+          if (!document.getElementById("fc-btn-easy").disabled) fcRate("easy");
+        } else if (e.key === "d" || e.key === "D") {
+          if (!document.getElementById("fc-btn-hard").disabled) fcRate("hard");
+        }
+      });
+
+      fcBuildDeck();
+
       function showModel(idx, el) {
         document
           .querySelectorAll(".model-card")
